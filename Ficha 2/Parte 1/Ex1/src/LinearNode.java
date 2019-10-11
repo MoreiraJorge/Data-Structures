@@ -3,7 +3,6 @@ public class LinearNode<T> {
 
     private T data;
     private LinearNode<T> next;
-    private LinearNode<T> previous;
 
     /**
      *
@@ -32,22 +31,7 @@ public class LinearNode<T> {
     public void setNext(LinearNode<T> next) {
         this.next = next;
     }
-
-    /**
-     *
-     * @return
-     */
-    public LinearNode<T> getPrevious() {
-        return previous;
-    }
-
-    /**
-     *
-     * @param previous
-     */
-    public void setPrevious(LinearNode<T> previous) {
-        this.previous = previous;
-    }
+    
 
     /**
      *
