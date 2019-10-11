@@ -32,22 +32,6 @@ public class LinkedList<T> {
         return false;
     }
 
-    /*
-    public LinearNode find(T data) {
-        LinearNode Node = this.head;
-
-        while (Node != null) {
-            if (Node.getData() == data) {
-                return Node;
-            } else {
-                Node = Node.getNext();
-            }
-        }
-
-        return null;
-    }
-    */
-
     public void remove(T data) {
         LinearNode current = this.head;
         LinearNode previous = null;
@@ -69,12 +53,13 @@ public class LinkedList<T> {
             if(head.getData() == data){ //remover o primeiro
                 head = current.getNext();
                 counter--;
-            } else if(current.getData() == data){ //remover do meio
-                previous.setNext(current.getNext());
-                counter--;
             } else if(current.getData() == data && current.getNext() == tail.getNext()){ //remover o ultimo
-                    tail = previous;
-                    counter--;
+                tail = previous;
+                tail.setNext(null);
+                counter--;
+            } else if(current.getData() == data){ //remover do meio
+            previous.setNext(current.getNext());
+            counter--;
             }
 
             /**
@@ -83,7 +68,6 @@ public class LinkedList<T> {
              */
             current = current.getNext();
         }
-
     }
 
     public void printList(){
@@ -97,5 +81,4 @@ public class LinkedList<T> {
 
         }while (Node != null);
     }
-
 }
