@@ -5,14 +5,17 @@ public class LinearNode<T> {
     private LinearNode<T> next;
     private LinearNode<T> previous;
 
+    /**
+     *
+     */
     public LinearNode() {
     }
 
     /**
-     * @param next
+     *
+     * @param data
      */
-    public LinearNode(T data, LinearNode<T> next) {
-        this.next = next;
+    public LinearNode(T data) {
         this.data = data;
     }
 
@@ -30,22 +33,41 @@ public class LinearNode<T> {
         this.next = next;
     }
 
+    /**
+     *
+     * @return
+     */
     public LinearNode<T> getPrevious() {
         return previous;
     }
 
+    /**
+     *
+     * @param previous
+     */
     public void setPrevious(LinearNode<T> previous) {
         this.previous = previous;
     }
 
+    /**
+     *
+     * @return
+     */
     public T getData() {
         return data;
     }
 
+    /**
+     *
+     */
     public void setData(T data) {
         this.data = data;
     }
 
+    /**
+     *
+     * @return
+     */
     public String toString(){
         return data.toString();
     }
