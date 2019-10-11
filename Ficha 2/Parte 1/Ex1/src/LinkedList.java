@@ -93,7 +93,7 @@ public class LinkedList<T> {
 
         LinearNode Node = this.head;
         do {
-            // Print the data at current node
+            // Print da informação
             System.out.print(Node.toString() + "\n");
 
             Node = Node.getNext();
