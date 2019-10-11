@@ -57,8 +57,6 @@ public class LinkedList<T> {
          * quando apanhar um que referencie null, o ciclo para
          */
         for (int i = 0; i <= counter; i++) {
-            //Definir sempre o previous para a informação do node atual
-            current.setPrevious(previous);
 
             /**
              * Guardar o previous sempre que o current for diferente do
@@ -68,7 +66,6 @@ public class LinkedList<T> {
                 previous = current;
             }
 
-
             if(head.getData() == data){ //remover o primeiro
                 head = current.getNext();
                 counter--;
@@ -76,7 +73,7 @@ public class LinkedList<T> {
                 previous.setNext(current.getNext());
                 counter--;
             } else if(current.getData() == data && current.getNext() == tail.getNext()){ //remover o ultimo
-                    tail = current.getPrevious();
+                    tail = previous;
                     counter--;
             }
 
