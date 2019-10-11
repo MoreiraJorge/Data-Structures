@@ -21,13 +21,14 @@ public class Demo {
         list1.printList();
         System.out.println("");
         //teste remover o primeiro
-        //list1.remove(car1)
+        list1.remove(car1);
 
         //teste remover do meio
-        list1.remove(car3);
-        list1.remove(car4);
+        //list1.remove(car3);
+        //list1.remove(car4);
 
         //teste remover ultimo
+        //list1.remove(car5);
 
         System.out.println("");
         System.out.println("New list: \n");

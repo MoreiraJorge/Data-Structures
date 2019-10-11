@@ -56,7 +56,9 @@ public class LinkedList<T> {
          * Ciclo para verificar todos os nodes que não referenciem null
          * quando apanhar um que referencie null, o ciclo para
          */
-        while (current.getNext() != null) {
+        for (int i = 0; i <= counter; i++) {
+            //Definir sempre o previous para a informação do node atual
+            current.setPrevious(previous);
 
             /**
              * Guardar o previous sempre que o current for diferente do
@@ -67,15 +69,16 @@ public class LinkedList<T> {
             }
 
 
-            if(head.getData() == data){
-                this.head = current.getNext();
-
-            } else if(current.getData() == data){
-                    previous.setNext(current.getNext());
-
-            } //else if(){
-
-            //}
+            if(head.getData() == data){ //remover o primeiro
+                head = current.getNext();
+                counter--;
+            } else if(current.getData() == data){ //remover do meio
+                previous.setNext(current.getNext());
+                counter--;
+            } else if(current.getData() == data && current.getNext() == tail.getNext()){ //remover o ultimo
+                    tail = current.getPrevious();
+                    counter--;
+            }
 
             /**
              * Andar para a frente com o current pra manter o ciclo a funcionar
@@ -85,8 +88,6 @@ public class LinkedList<T> {
         }
 
     }
-
-
 
     public void printList(){
 
@@ -99,8 +100,5 @@ public class LinkedList<T> {
 
         }while (Node != null);
     }
-
-
-
 
 }
