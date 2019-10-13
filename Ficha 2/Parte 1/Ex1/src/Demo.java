@@ -31,7 +31,6 @@ public class Demo {
         list1.remove(car1);
         list1.remove(car2);
         list1.remove(car3);
-        list1.remove(car4);
 
         //teste remover ultimo
         //list1.remove(car5);
