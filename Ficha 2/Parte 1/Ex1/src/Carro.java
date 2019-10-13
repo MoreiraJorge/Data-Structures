@@ -9,12 +9,21 @@ public class Carro {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      *
      * @return
      */
     public String toString(){
-        String text = "Nome : " + this.name;
+        String text;
+        if (name != null ) {
+            text = "Nome : " + this.name;
+        } else {
+            text = "Carro sem Nome!";
+        }
         return text;
     }
 }

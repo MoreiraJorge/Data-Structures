@@ -31,7 +31,7 @@ public class LinearNode<T> {
     public void setNext(LinearNode<T> next) {
         this.next = next;
     }
-    
+
 
     /**
      *
