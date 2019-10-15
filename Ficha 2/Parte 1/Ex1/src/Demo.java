@@ -17,29 +17,27 @@ public class Demo {
         System.out.println("");
 
         list1.addElement(car1);
-        list1.addElement(car2);
-        list1.addElement(car3);
-        list1.addElement(car4);
-        list1.addElement(car5);
+        //list1.addElement(car2);
+        //list1.addElement(car3);
+        //list1.addElement(car4);
+        //list1.addElement(car5);
         System.out.println("Old List : \n");
-        //list1.printList();
+        list1.printList();
         System.out.println("");
         //teste remover o primeiro
         //list1.remove(car1);
 
         //teste remover do meio
         list1.remove(car1);
-        list1.remove(car2);
-        list1.remove(car3);
-        list1.remove(car4);
+        //list1.remove(car2);
+        //list1.remove(car3);
+        //list1.remove(car4);
 
         //teste remover ultimo
         //list1.remove(car5);
 
 
-        list1.printList();
-
-        list1.remove(car5);
+        //list1.printList();
 
         list1.printList();
         System.out.println("");

@@ -3,7 +3,7 @@ import MyExceptions.NodeNotFoundException;
 
 public class LinkedList<T> {
 
-    private int counter;
+    private int counter = 0;
     private LinearNode<T> head, tail;
 
     /**
@@ -53,7 +53,7 @@ public class LinkedList<T> {
         }
 
 
-        if (current != null) { //se houver conteudo na lista
+        if (counter > 0) { //se houver conteudo na lista
 
             if (found == true) { //so se remove se o nodo for encontrado
 
@@ -107,7 +107,7 @@ public class LinkedList<T> {
             } while (Node != null);
 
         } else {
-            throw new EmptyListException("List is Empty!!");
+            throw new EmptyListException("Can't print, List is Empty!!");
         }
 
 
