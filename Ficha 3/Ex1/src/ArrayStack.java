@@ -41,8 +41,25 @@ public class ArrayStack<T> implements StackADT<T> {
     /**
      * If Array is full, this method copies the old array to a new array with more positions
      */
+
+    /*
     private void expandCapacity(){
         stack = Arrays.copyOf(stack, stack.length + DEFAULT_CAPACITY);
+    }
+    */
+
+    /**
+     * manual resize
+     */
+    private void expandCapacity(){
+
+        T[] tmp = (T[]) (new Object[stack.length + DEFAULT_CAPACITY]);
+        for(int i = 0; i < stack.length; ++i) {
+            tmp[i] = stack[i];
+        }
+
+        stack = tmp;
+
     }
 
     @Override
