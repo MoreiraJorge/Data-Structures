@@ -35,25 +35,25 @@ public class LinkedList<T> {
     /**
      * @param data
      */
-    public void remove(T data) throws NodeNotFoundException, EmptyListException {
+    public boolean remove(T data) throws NodeNotFoundException, EmptyListException {
 
-        LinearNode current = this.head;
-        LinearNode p = null;
-        boolean found = false;
+        if (counter == 0) { //se nao houver conteudo na lista
+            throw new EmptyListException("List is Empty!");
+        } else {
 
-        while (current != null && found == false) {
+            LinearNode current = this.head;
+            LinearNode p = null;
+            boolean found = false;
 
-            if (current.getData() == data) {
-                System.out.println("Node found!");
-                found = true;
-            } else {
-                p = current;
-                current = current.getNext();
+            while (current != null && found == false) {
+
+                if (current.getData() == data) {
+                    found = true;
+                } else {
+                    p = current;
+                    current = current.getNext();
+                }
             }
-        }
-
-
-        if (counter > 0) { //se houver conteudo na lista
 
             if (found == true) { //so se remove se o nodo for encontrado
 
@@ -74,16 +74,11 @@ public class LinkedList<T> {
                 }
 
                 counter--; //decrementar o counter na remoção
-
+                return found;
             } else { //se nao for encontrado lança exception
                 throw new NodeNotFoundException("Node Not found!!");
             }
-
-        } else { //se não houver conteudo lança exception
-            throw new EmptyListException("List is Empty!");
         }
-
-
     }
 
 
@@ -91,25 +86,16 @@ public class LinkedList<T> {
      * Imprimir todos os elementos da list
      */
     public void printList() throws EmptyListException {
-
         LinearNode Node = this.head;
-
         //só imprime se houver elementos na lista
         if (Node != null) {
-            System.out.println("New list: \n");
             do {
                 // Print da informação
-
                 System.out.print(Node.toString() + "\n");
-
                 Node = Node.getNext();
-
             } while (Node != null);
-
         } else {
             throw new EmptyListException("Can't print, List is Empty!!");
         }
-
-
     }
 }

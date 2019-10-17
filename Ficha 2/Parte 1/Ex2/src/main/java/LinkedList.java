@@ -1,73 +1,95 @@
+import MyExceptions.EmptyListException;
+import MyExceptions.NodeNotFoundException;
+
 public class LinkedList<T> {
 
     private int counter;
 
-    private Node<T> head, tail;
-    private Node<T> sentinel = new Node<>(null,null);
 
+    private Node<T> sentinelhead = new Node<>(null);
+    private Node<T> sentineltail = new Node<>(null);;
 
     LinkedList(){
-        head.setNext(sentinel);
-        sentinel.setPrevious(head);
+        this.sentinelhead.setNext(this.sentineltail);
+        this.sentineltail.setNext(this.sentinelhead);
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
+
     public void addElement(T data){
 
-        Node newNode = new Node<>(data, null);
+        Node newNode = new Node<>(data);
 
-        if(sentinel.getNext() == null){
-            sentinel.setNext(newNode);
+
+        if (this.sentinelhead.getNext() == sentineltail) {
+            this.sentinelhead.setNext(newNode);
+            this.sentineltail.setNext(newNode);
+
+        } else if (this.sentinelhead.getNext() != current){
+            current.setNext(newNode);
+            this.sentineltail.setNext(newNode);
         }
+        current = current.getNext();
         counter++;
     }
 
-    public void remove(T data) {
-        Node current = this.head;
-        Node previous = null;
 
-        /**
-         * Ciclo para verificar todos os nodes que não referenciem null
-         * quando apanhar um que referencie null, o ciclo para
-         */
-        for (int i = 0; i <= counter; i++) {
+    /*
+    public boolean remove(T data) throws NodeNotFoundException, EmptyListException {
 
-            /**
-             * Guardar o previous sempre que o current for diferente do
-             * inserido pelo user
-             */
-            if(current.getData() != data){
-                previous = current;
+        if (counter == 0) { //se nao houver conteudo na lista
+            throw new EmptyListException("List is Empty!");
+        } else {
+
+            Node current = this.sentinelhead;
+            Node p = null;
+            boolean found = false;
+
+            while (current != null && found == false) {
+
+                if (current.getData() == data) {
+                    found = true;
+                } else {
+                    p = current;
+                    current = current.getNext();
+                }
             }
 
-            if(head.getData() == data){ //remover o primeiro
-                head = current.getNext();
-                counter--;
-            } else if(current.getData() == data && current.getNext() == tail.getNext()){ //remover o ultimo
-                tail = previous;
-                tail.setNext(null);
-                counter--;
-            } else if(current.getData() == data){ //remover do meio
-                previous.setNext(current.getNext());
-                counter--;
-            }
+            if (found == true) { //so se remove se o nodo for encontrado
 
-            /**
-             * Andar para a frente com o current pra manter o ciclo a funcionar
-             *
-             */
-            current = current.getNext();
+                if (this.sentinelhead.getData().equals(data) || this.sentinelhead.getData().equals(null)) { //remover o primeiro com ou sem data
+                    this.sentinelhead.setNext(current.getNext());
+                    this.sentinelhead = current.getNext();
+
+
+                    if (current.equals(tail)) { //se o primeiro nodo for o unico elemento da lista
+                        this.tail = null;
+                    }
+
+                }
+
+
+                else if (current != this.tail && current.getData().equals(data) || current.getData().equals(null)) { //remover do meio com ou sem data
+                    p.setNext(current.getNext());
+
+                }
+                else if (this.tail.getData().equals(data) || this.tail.getData().equals(null)) {//remover ultimo com ou sem data
+                    p.setNext(tail.getNext());
+                    this.tail = p;
+                }
+
+                counter--; //decrementar o counter na remoção
+                return found;
+            } else { //se nao for encontrado lança exception
+                throw new NodeNotFoundException("Node Not found!!");
+            }
         }
     }
 
+    /*
     public void printList(){
 
-        Node Node = sentinel;
-        for(int i = 0; i <= counter && Node.getData() != sentinel.getData(); i++) {
+        Node Node = sentinelhead;
+        for(int i = 0; i <= counter && Node.getData() != sentinelhead.getData(); i++) {
             // Print da informação
             System.out.print(Node.toString() + "\n");
 
@@ -75,4 +97,5 @@ public class LinkedList<T> {
         }
 
     }
+    */
 }

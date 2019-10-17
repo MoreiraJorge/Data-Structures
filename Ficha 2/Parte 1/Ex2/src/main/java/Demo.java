@@ -9,10 +9,10 @@ public class Demo {
         LinkedList<Carro> list1 = new LinkedList();
 
         System.out.println("");
-
         list1.addElement(car1);
-        //list1.printList();
-
+        list1.addElement(car2);
+        list1.addElement(car3);
+        //list1.addElement(car4);
         System.out.println("");
     }
 }
