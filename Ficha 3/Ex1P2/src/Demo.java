@@ -3,6 +3,6 @@ public class Demo {
 
     Calculator calculator = new Calculator();
     calculator.ask();
-
+        System.out.println(" Hi");
     }
 }

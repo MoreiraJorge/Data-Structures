@@ -1,5 +1,6 @@
 import Exceptions.EmptyCollectionException;
 
+import javax.naming.InsufficientResourcesException;
 import java.util.Scanner;
 
 public class Calculator {
@@ -26,8 +27,20 @@ public class Calculator {
      * @param input
      */
     public void processInput(String input) {
+        boolean success = true;
 
-        for (int i = 0; i < input.length(); i++) {//percorre a string
+            String[] inarray = input.split(" ");
+            for(int x = 0; x < inarray.length; x++){
+                try {
+                    Integer tmp = Integer.parseInt(inarray[x]);
+                    if (tmp instanceof Integer) {
+                        stack.push(tmp);
+                    }
+                }catch(Exception e){
+                    calculate(inarray[x]);
+                }
+            }
+            /*
             int ascii = (int) input.charAt(i);//passa o primeiro char da string a ascii
 
             if (ascii > 47 && ascii < 58) { //verifica se o codigo ascii corresponde a um digito de 0 a 9
@@ -38,44 +51,42 @@ public class Calculator {
                     calculate(ascii);//faz a operação com o input dado
                 }
             }
-
-
-        }
+        */
         System.out.println("stack: \n" + stack.toString());
     }
 
     /**
      *
-     * @param ascii
+     * @param op
      */
-    public void calculate(int ascii) {
+    public void calculate(String op) {
         int numb1 = 0, numb2 = 0, res = 0;
-        char operation = (char) ascii;
+        String operation = op;
 
         try {
             switch (operation) {
-                case '+':
+                case "+":
                     numb1 = stack.pop();
                     numb2 = stack.pop();
                     res = numb1 + numb2;
                     stack.push(res);
                     System.out.println("result = " + res);
                     break;
-                case '-':
+                case "-":
                     numb1 = stack.pop();
                     numb2 = stack.pop();
                     res = numb1 - numb2;
                     stack.push(res);
                     System.out.println("result = " + res);
                     break;
-                case '*':
+                case "*":
                     numb1 = stack.pop();
                     numb2 = stack.pop();
                     res = numb1 * numb2;
                     stack.push(res);
                     System.out.println("result = " + res);
                     break;
-                case '/':
+                case "/":
                     numb1 = stack.pop();
                     numb2 = stack.pop();
                     res = numb1 / numb2;
