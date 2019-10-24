@@ -27,8 +27,6 @@ public class Calculator {
      * @param input
      */
     public void processInput(String input) {
-        boolean success = true;
-
             String[] inarray = input.split(" ");
             for(int x = 0; x < inarray.length; x++){
                 try {
@@ -40,18 +38,6 @@ public class Calculator {
                     calculate(inarray[x]);
                 }
             }
-            /*
-            int ascii = (int) input.charAt(i);//passa o primeiro char da string a ascii
-
-            if (ascii > 47 && ascii < 58) { //verifica se o codigo ascii corresponde a um digito de 0 a 9
-                int a = Character.getNumericValue(input.charAt(i));//pega no valor numerico do char (um valor entre 0 e 9)
-                stack.push(a);//manda pra stack
-            } else if (ascii == 42 || ascii == 43 || ascii == 47 || ascii == 47) {//se o codigo ascii corresponder ao input de + - * ou /
-                if (stack.size() >= 2) {//e se houver pelo menos 2 numeros na stack
-                    calculate(ascii);//faz a operação com o input dado
-                }
-            }
-        */
         System.out.println("stack: \n" + stack.toString());
     }
 
