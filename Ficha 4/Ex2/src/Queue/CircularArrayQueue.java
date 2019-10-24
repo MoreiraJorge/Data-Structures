@@ -16,38 +16,27 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
 
     @Override
     public void enqueue(T element) {
+
         if (size() == circular.length) {
             expandCapacity();
-            this.front = 0;
-            this.rear = size();
-            circular[rear] = element;
-            rear = (rear + 1) % circular.length;
-            size++;
-        } else {
-            circular[rear] = element;
-            rear = (rear + 1) % circular.length;
-            size++;
         }
+
+        circular[rear] = element;
+        rear = (rear + 1) % circular.length;
+        size++;
 
     }
 
     @Override
     public T dequeue() {
-        if(size() == 0){
-            System.out.println("Empty array!!");
+        if (size() == 0) {
             return null;
-        } else if(size() == 1){
-            T tmp = circular[front];
-            this.front = this.rear = 0;
-            size--;
-            return tmp;
-        } else {
-            T tmp = circular[front];
-            circular[front] = null;
-            front = (front + 1) % circular.length;
-            size--;
-            return tmp;
         }
+
+        T tmp = circular[front];
+        front = (front + 1) % circular.length;
+        size--;
+        return tmp;
     }
 
     @Override
@@ -70,12 +59,20 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     }
 
     private void expandCapacity() {
+
         T[] tmp = (T[]) (new Object[circular.length + DEFAULT_CAPACITY]);
-        for (int i = 0; i < circular.length; ++i) {
-            tmp[i] = circular[i];
+        int tmpFront = front;
+
+        for (int i = 0; i < circular.length; i++) {
+            tmp[i] = circular[tmpFront];
+            tmpFront = (tmpFront + 1) % circular.length;
         }
+        front = 0;
+        rear = size();
+
         circular = tmp;
     }
+
 
     public String toString() {
         String text = "";

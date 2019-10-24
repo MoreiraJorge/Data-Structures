@@ -3,7 +3,7 @@ import Queue.CircularArrayQueue;
 public class Main {
     public static void main(String[] args) {
 
-        int test = 6;
+        int test = 3;
         CircularArrayQueue<String> lqueue = new CircularArrayQueue<>();
 
         switch (test) {
@@ -28,7 +28,8 @@ public class Main {
                 lqueue.enqueue("Hello7");
                 System.out.println("");
                 break;
-            case 3: //test first
+            case 3: //test first empty
+                //lqueue.enqueue("Hello");
                 System.out.println(lqueue.first());
                 break;
             case 4: //test remove elements
