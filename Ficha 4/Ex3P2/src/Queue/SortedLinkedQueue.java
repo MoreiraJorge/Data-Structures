@@ -2,7 +2,7 @@ package Queue;
 
 import Interfaces.QueueADT;
 
-public class SortedLinkedQueue<T extends Comparable> implements QueueADT {
+public class SortedLinkedQueue<T extends Comparable> implements QueueADT<T> {
 
     private LinearNode<T> front, rear;
     private int size = 0;
@@ -13,7 +13,11 @@ public class SortedLinkedQueue<T extends Comparable> implements QueueADT {
     }
 
     @Override
-    public void enqueue(Object element) {
+    public void enqueue(T element) {
+
+        boolean found = false;
+        LinearNode<T> current = this.front;
+        LinearNode<T> p = null;
 
         if (size() == 0) {
             this.front = new LinearNode(element);
@@ -21,12 +25,39 @@ public class SortedLinkedQueue<T extends Comparable> implements QueueADT {
             this.rear = this.front;
         } else {
 
+            while (current != null && found == false) {
+
+                if (current.getData().compareTo(element) > 0) {
+                    found = true;
+                } else {
+                    p = current;
+                    current = current.getNext();
+                }
+
+            }
+
+            if(found == true){
+                if(current == this.front){
+                    this.front = new LinearNode(element);
+                    this.front.setNext(current);
+                } else {
+                    p.setNext(new LinearNode(element));
+                    p.getNext().setNext(current);
+                }
+
+            } else {
+                this.rear.setNext(new LinearNode(element));
+                this.rear = this.rear.getNext();
+            }
+
+
         }
+        size++;
 
     }
 
     @Override
-    public Object dequeue() {
+    public T dequeue() {
         T tmp = null;
 
         if (size() == 0) {
@@ -45,7 +76,7 @@ public class SortedLinkedQueue<T extends Comparable> implements QueueADT {
     }
 
     @Override
-    public Object first() {
+    public T first() {
         if (size() == 0) {
             return null;
         } else {

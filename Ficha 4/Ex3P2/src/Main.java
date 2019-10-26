@@ -1,3 +1,4 @@
+import Queue.Merger;
 import Queue.SortedLinkedQueue;
 
 public class Main {
@@ -44,7 +45,19 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        SortedLinkedQueue<String> queue1 = new SortedLinkedQueue<>();
+        SortedLinkedQueue<String> queue2 = new SortedLinkedQueue<>();
+        Merger m = new Merger(queue1, queue2);
 
+        queue1.enqueue("a");
+        queue1.enqueue("c");
+        queue1.enqueue("e");
+
+        queue2.enqueue("b");
+        queue2.enqueue("d");
+        queue2.enqueue("f");
+
+        System.out.println(m.merger(queue1, queue2));
         //tests(1);
 
     }
