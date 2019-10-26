@@ -2,51 +2,50 @@ package Queue;
 
 import Interfaces.QueueADT;
 
-public class LinkedQueue<T> implements QueueADT<T> {
+public class SortedLinkedQueue<T extends Comparable> implements QueueADT {
 
     private LinearNode<T> front, rear;
     private int size = 0;
 
-    public LinkedQueue() {
+    public SortedLinkedQueue() {
         this.front = null;
         this.rear = null;
     }
 
     @Override
-    public void enqueue(T element) {
+    public void enqueue(Object element) {
 
         if (size() == 0) {
             this.front = new LinearNode(element);
             this.front.setNext(null);
             this.rear = this.front;
         } else {
-            this.rear.setNext(new LinearNode(element));
-            this.rear = rear.getNext();
+
         }
-        size++;
+
     }
 
     @Override
-    public T dequeue() {
+    public Object dequeue() {
+        T tmp = null;
 
         if (size() == 0) {
             return null;
         } else if (size() == 1) {
-            T tmp = this.front.getData();
+            tmp = this.front.getData();
             this.front = this.rear = null;
             size--;
             return tmp;
         } else {
-            T tmp = this.front.getData();
+            tmp = this.front.getData();
             this.front = front.getNext();
             size--;
             return tmp;
         }
-
     }
 
     @Override
-    public T first() {
+    public Object first() {
         if (size() == 0) {
             return null;
         } else {
@@ -66,18 +65,20 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
     @Override
     public String toString() {
+
         String text = "";
         LinearNode Node = this.front;
-        //só imprime se houver elementos na lista
+
         if (Node != null) {
-            do {
-                // Print da informação
-                text +=  "\n" + Node.toString();
+            while (Node != null) {
+                text += "\n" + Node.toString();
                 Node = Node.getNext();
-            } while (Node != null);
+            }
         } else {
             System.out.println("Empty QUEUE");
         }
+
         return text;
     }
+
 }
