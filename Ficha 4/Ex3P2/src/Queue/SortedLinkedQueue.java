@@ -26,17 +26,17 @@ public class SortedLinkedQueue<T extends Comparable> implements QueueADT<T> {
         } else {
 
             while (current != null && found == false) {
-
                 if (current.getData().compareTo(element) > 0) {
                     found = true;
                 } else {
                     p = current;
                     current = current.getNext();
                 }
-
             }
 
+
             if(found == true){
+
                 if(current == this.front){
                     this.front = new LinearNode(element);
                     this.front.setNext(current);
@@ -49,7 +49,6 @@ public class SortedLinkedQueue<T extends Comparable> implements QueueADT<T> {
                 this.rear.setNext(new LinearNode(element));
                 this.rear = this.rear.getNext();
             }
-
 
         }
         size++;

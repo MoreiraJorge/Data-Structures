@@ -44,7 +44,6 @@ public class LinearNode<T> {
         this.next = next;
     }
 
-
     /**
      * gets the data
      * @return

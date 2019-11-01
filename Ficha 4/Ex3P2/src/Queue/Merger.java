@@ -12,12 +12,14 @@ public class Merger<T extends Comparable> {
     }
 
     public SortedLinkedQueue merger(SortedLinkedQueue a, SortedLinkedQueue b){
+
         while(!a.isEmpty() || !b.isEmpty()){
             if (!a.isEmpty())
                 this.c.enqueue((T) a.dequeue());
             if (!b.isEmpty())
                 this.c.enqueue((T) b.dequeue());
         }
+
         return this.c;
     }
 
