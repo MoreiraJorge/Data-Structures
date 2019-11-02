@@ -78,4 +78,10 @@ public class DoubleNode<E> {
         element = elem;
     }
 
+    @Override
+    public String toString() {
+        String text = "";
+        text += element.toString();
+        return text;
+    }
 }
