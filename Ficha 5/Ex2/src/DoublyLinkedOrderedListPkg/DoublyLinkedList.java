@@ -92,10 +92,12 @@ public class DoublyLinkedList<T> implements ListADT<T> {
             return removeFirst();
         } else if (this.tail.getElement() == tmp.getElement()) {
             return removeLast();
-        } else {
+        } else if (size() == 1){
+            this.head = this.tail = null;
+            return (T) tmp;
+        }else {
             tmp.getNext().setPrevious(tmp.getPrevious());
             tmp.getNext().getPrevious().setNext(tmp.getNext());
-
             return (T) tmp;
         }
 
