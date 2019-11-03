@@ -63,9 +63,9 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         if(isEmpty()){
             return null;
         } else if(size() == 1){
-            T tmp = (T) this.head;
-            this.head = null;
+            T tmp = (T) this.tail;
             this.tail = null;
+            this.head = this.tail;
             size--;
             return tmp;
         } else {
