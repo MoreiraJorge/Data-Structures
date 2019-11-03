@@ -58,23 +58,35 @@ public class DoublyLinkedList<T> implements ListADT<T> {
     @Override
     public T remove(T element) {
 
-        DoubleNode<T> tmp = search(element);
+        boolean found = false;
+        DoubleNode<T> previous = null;
+        DoubleNode<T> current = head;
 
         if (isEmpty() == true) {
             return null;
         }
 
-
-        if (this.head.getElement() == tmp) {
-            return removeFirst();
-        } else if (this.tail.getElement() == tmp) {
-            return removeLast();
-        } else {
-            tmp.getNext().setPrevious(tmp.getPrevious());
-            tmp.getNext().getPrevious().setNext(tmp.getNext());
-
-            return (T) tmp;
+        while (current != null && !found) {
+            if (element.equals(current.getElement())) {
+                found = true;
+            } else {
+                previous = current;
+                current = current.getNext();
+            }
         }
+        
+        if (size() == 1){
+            head = tail = null;
+        } else if (current.equals(head)){
+            head = current.getNext();
+        } else if (current.equals(tail)) {
+            tail = previous;
+            tail.setNext(null);
+        } else previous.setNext(current.getNext());
+
+        size--;
+
+        return current.getElement();
 
     }
 
