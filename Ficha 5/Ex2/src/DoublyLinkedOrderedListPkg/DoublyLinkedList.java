@@ -39,20 +39,43 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
     @Override
     public T removeFirst() {
-        T tmp = (T) this.head;
-        head = head.getNext();
-        head.setPrevious(null);
-        size--;
-        return tmp;
+
+        if(isEmpty()){
+            return null;
+        } else if(size() == 1){
+            T tmp = (T) this.head;
+            this.head = null;
+            this.tail = null;
+            size--;
+            return tmp;
+        } else {
+            T tmp = (T) this.head;
+            this.head = this.head.getNext();
+            this.head.setPrevious(null);
+            size--;
+            return tmp;
+        }
+
     }
 
     @Override
     public T removeLast() {
-        T tmp = (T) this.tail;
-        this.tail = tail.getPrevious();
-        tail.setNext(null);
-        size--;
-        return tmp;
+        if(isEmpty()){
+            return null;
+        } else if(size() == 1){
+            T tmp = (T) this.head;
+            this.head = null;
+            this.tail = null;
+            size--;
+            return tmp;
+        } else {
+            T tmp = (T) this.tail;
+            this.tail = tail.getPrevious();
+            tail.setNext(null);
+            size--;
+            return tmp;
+        }
+
     }
 
     @Override
