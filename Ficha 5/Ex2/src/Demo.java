@@ -10,7 +10,7 @@ public class Demo {
             case 1: //Ordered Add Test
                 olist.add(1);
                 olist.add(2);
-               //.add(3);
+                //olist.add();
 
                 System.out.println(olist.toString());
                 break;
@@ -87,6 +87,6 @@ public class Demo {
 
     }
     public static void main(String[] args) {
-        test(1);
+        test(7);
     }
 }

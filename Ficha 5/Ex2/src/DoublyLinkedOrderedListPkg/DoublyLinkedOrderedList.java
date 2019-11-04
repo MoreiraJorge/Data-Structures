@@ -22,11 +22,11 @@ public class DoublyLinkedOrderedList<T extends Comparable> extends DoublyLinkedL
         } else {
 
             boolean found = false;
-            Iterator<T> itr = iterator();
 
-            while (found == false) {
 
-                if (itr.next().compareTo(newNode.getElement()) > 0) {
+            while (current != null && found == false) {
+                Comparable<T> tmp = (Comparable<T>) current.getElement();
+                if (tmp.compareTo(newNode.getElement()) > 0) {
                     found = true;
                 } else {
                     current = current.getNext();
@@ -34,7 +34,7 @@ public class DoublyLinkedOrderedList<T extends Comparable> extends DoublyLinkedL
 
             }
 
-            if (found = true) {
+            if (found == true) {
                 if (current == this.head) {
 
                     DoubleNode<T> olderHead = this.head;

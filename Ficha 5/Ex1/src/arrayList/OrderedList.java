@@ -15,16 +15,14 @@ public class OrderedList<T extends Comparable> extends ArrayList<T>
 
         if (isEmpty()) {
             array[0] = element;
-            size++;
-            rear++;
         } else {
 
             boolean found = false;
-            Iterator<T> itr = iterator();
             int current = 0;
 
             while (current < size && found == false) {
-                if (itr.next().compareTo(element) > 0) {
+                Comparable<T> tmp = (Comparable<T>) array[current];
+                if (tmp.compareTo(element) > 0) {
                     found = true;
                 } else {
                     current++;
@@ -39,9 +37,9 @@ public class OrderedList<T extends Comparable> extends ArrayList<T>
             } else {
                 array[rear] = element;
             }
-            rear++;
-            size++;
         }
+        rear++;
+        size++;
     }
 
 }
