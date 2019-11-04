@@ -12,16 +12,17 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
         @Override
         public boolean hasNext() {
-            if (current.getNext() != null) {
+            if (current != null) {
                 return true;
             }
+
             return false;
         }
 
         @Override
         public T next() {
             if (hasNext()) {
-                T tmp = (T) current.getElement();
+                T tmp = current.getElement();
                 current = current.getNext();
                 return tmp;
             }
@@ -131,7 +132,7 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
     @Override
     public Iterator<T> iterator() {
-        DoublyLinkedListIterator itr = new DoublyLinkedListIterator<T>();
+        Iterator<T> itr = new DoublyLinkedListIterator<T>();
         return itr;
     }
 
@@ -164,8 +165,9 @@ public class DoublyLinkedList<T> implements ListADT<T> {
     @Override
     public String toString() {
 
-        Iterator<T> it = iterator();
         String text = "";
+        Iterator<T> it = new DoublyLinkedListIterator<T>();
+
 
         if (isEmpty()) {
             return null;
@@ -175,7 +177,6 @@ public class DoublyLinkedList<T> implements ListADT<T> {
             text += it.next().toString() + "\n";
         }
 
-        text += this.tail.getElement().toString() + "\n";
         return text;
     }
 

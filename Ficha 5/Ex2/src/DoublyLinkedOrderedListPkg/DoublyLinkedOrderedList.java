@@ -18,13 +18,13 @@ public class DoublyLinkedOrderedList<T extends Comparable> extends DoublyLinkedL
         if (isEmpty()) {
             this.head = newNode;
             this.tail = this.head;
-            size++;
+
         } else {
 
             boolean found = false;
             Iterator<T> itr = iterator();
 
-            while (current != this.tail && found == false) {
+            while (found == false) {
 
                 if (itr.next().compareTo(newNode.getElement()) > 0) {
                     found = true;
@@ -34,12 +34,32 @@ public class DoublyLinkedOrderedList<T extends Comparable> extends DoublyLinkedL
 
             }
 
-            System.out.println("");
+            if (found = true) {
+                if (current == this.head) {
 
-            if (found == false) {
+                    DoubleNode<T> olderHead = this.head;
+                    this.head = newNode;
+                    this.head.setNext(olderHead);
+                    olderHead.setPrevious(this.head);
+
+                } else {
+                    DoubleNode<T> previous = current.getPrevious();
+
+                    previous.setNext(newNode);
+                    current.setPrevious(newNode);
+
+                    newNode.setPrevious(previous);
+                    newNode.setNext(current);
+                }
+
+            } else {
+                DoubleNode<T> olderTail = this.tail;
+                this.tail = newNode;
+                this.tail.setPrevious(olderTail);
+                olderTail.setNext(this.tail);
             }
 
-            size++;
         }
+        size++;
     }
 }

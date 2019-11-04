@@ -8,9 +8,8 @@ public class Demo {
 
         switch (test) {
             case 1: //Ordered Add Test
-                olist.add(2);
                 olist.add(1);
-                //olist.add(4);
+                olist.add(2);
                //.add(3);
 
                 System.out.println(olist.toString());
