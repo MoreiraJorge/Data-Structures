@@ -7,6 +7,7 @@ import java.util.Iterator;
 public class DoublyLinkedList<T> implements ListADT<T> {
 
     private class DoublyLinkedListIterator<T> implements Iterator<T> {
+        private int expectedModCount = modCount;
 
         private DoubleNode<T> current = (DoubleNode<T>) head;
 
@@ -32,6 +33,7 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
     protected DoubleNode<T> head, tail;
     protected int size = 0;
+    protected int modCount = 0;
 
     public DoublyLinkedList() {
         this.head = null;

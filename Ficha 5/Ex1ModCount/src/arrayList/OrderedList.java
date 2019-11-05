@@ -4,7 +4,7 @@ import Interfaces.OrderedListADT;
 
 import java.util.Iterator;
 
-public class OrderedList<T extends Comparable> extends ArrayList<T>
+public class OrderedList<T> extends ArrayList<T>
         implements OrderedListADT<T> {
 
     public OrderedList() {
@@ -12,36 +12,41 @@ public class OrderedList<T extends Comparable> extends ArrayList<T>
 
     @Override
     public void add(T element) {
+        if(element instanceof Comparable) {
 
-        if (isEmpty()) {
-            array[0] = element;
-            size++;
-            rear++;
-        } else {
-
-            boolean found = false;
-            Iterator<T> itr = iterator();
-            int current = 0;
-
-            while (current < size && found == false) {
-                if (itr.next().compareTo(element) > 0) {
-                    found = true;
-                } else {
-                    current++;
-                }
-            }
-
-            if(found = true){
-                for (int i = rear - 1; i >= current; i--) {
-                    array[i + 1] = array[i];
-                }
-                array[current] = element;
+            if (isEmpty()) {
+                array[0] = element;
+                size++;
+                rear++;
             } else {
-                array[rear] = element;
+
+                boolean found = false;
+
+                int current = 0;
+
+                while (current < size && found == false) {
+                    Comparable<T> tmp = (Comparable<T>) array[current];
+                    if (tmp.compareTo(element) > 0) {
+                        found = true;
+                    } else {
+                        current++;
+                    }
+                }
+
+                if (found = true) {
+                    for (int i = rear - 1; i >= current; i--) {
+                        array[i + 1] = array[i];
+                    }
+                    array[current] = element;
+                } else {
+                    array[rear] = element;
+                }
+                rear++;
+                size++;
+                modCount++;
             }
-            rear++;
-            size++;
-            modCount++;
+        } else {
+            System.out.println("Elemento não é comparable!!!");
         }
     }
 
