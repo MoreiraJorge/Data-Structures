@@ -111,11 +111,17 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
     @Override
     public T first() {
+        if(isEmpty()){
+            return null;
+        }
         return head.getElement();
     }
 
     @Override
     public T last() {
+        if(isEmpty()){
+            return null;
+        }
         return tail.getElement();
     }
 
