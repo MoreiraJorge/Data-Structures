@@ -25,16 +25,22 @@ public class Demo {
                 tmp.addToRear(4);
                 System.out.println(tmp.toString());
                 break;
-
+            case 4: //remve first
+                tmp.addToFront(2);
+                tmp.addAfter(3,2);
+                tmp.addToRear(4);
+                System.out.println(tmp.toString());
+                tmp.removeFirst();
+                System.out.println(tmp.toString());
+                break;
             default:
                 break;
-
         }
 
     }
 
     public static void main (String[]args){
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 4; i++) {
             test(i);
         }
     }
