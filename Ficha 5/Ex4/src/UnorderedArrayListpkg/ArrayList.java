@@ -2,6 +2,7 @@ package UnorderedArrayListpkg;
 
 import Interfaces.ListADT;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 
@@ -9,14 +10,17 @@ public class ArrayList<T> implements ListADT<T> {
 
     private class ArrayListIterator<T> implements Iterator<T> {
         private int counter = 0;
+        private int expectedModcount = modCount;
 
         @Override
         public boolean hasNext() {
-            if (counter < size) {
-                return true;
+            if(expectedModcount == modCount) {
+                if (counter < size) {
+                    return true;
+                }
+                return false;
             }
-            return false;
-
+            throw new ConcurrentModificationException();
         }
 
         @Override
@@ -34,6 +38,7 @@ public class ArrayList<T> implements ListADT<T> {
     protected T[] array;
     protected int size;
     protected int rear;
+    protected int modCount = 0;
 
     /**
      * Default / Empty ArrayList Constructor

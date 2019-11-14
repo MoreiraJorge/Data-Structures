@@ -1,7 +1,7 @@
 package Interfaces;
 
 
-public interface UnorderedArrayListADT<T> extends ListADT<T> {
+public interface UnorderedDoublyLinkedListADT<T> extends ListADT<T> {
 
     public void addToFront(T element);
 

@@ -2,8 +2,6 @@ package arrayList;
 
 import Interfaces.OrderedListADT;
 
-import java.util.Iterator;
-
 public class OrderedList<T extends Comparable> extends ArrayList<T>
         implements OrderedListADT<T> {
 
