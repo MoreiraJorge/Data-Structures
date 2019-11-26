@@ -19,7 +19,7 @@ public class Demo {
             System.out.println(cararray[i].toString());
         }
 
-        Sorting.selectionSortmax(cararray);
+        Sorting.mergeSort(cararray,0,4);
 
         System.out.println("");
         System.out.println("Ordenado: ");
