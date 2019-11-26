@@ -138,12 +138,13 @@ public class Sorting {
                     data[right] = temp;
                 }
             }
+
             /** move partition element to partition index*/
             temp = data[min];
             data[min] = data[right];
             data[right] = temp;
-
             return right;
+
         }
 
         return left;
