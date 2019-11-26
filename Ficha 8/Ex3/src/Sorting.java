@@ -131,23 +131,22 @@ public class Sorting {
             /** search for an element that is < the partitionelement */
             while (data[right].compareTo(partitionelement) > 0) {
                 right--;
-                /** swap the elements */
-                if (left < right) {
-                    temp = data[left];
-                    data[left] = data[right];
-                    data[right] = temp;
-                }
             }
 
-            /** move partition element to partition index*/
-            temp = data[min];
-            data[min] = data[right];
-            data[right] = temp;
-            return right;
-
+            /** swap the elements */
+            if (left < right) {
+                temp = data[left];
+                data[left] = data[right];
+                data[right] = temp;
+            }
         }
 
-        return left;
+        /** move partition element to partition index*/
+        temp = data[min];
+        data[min] = data[right];
+        data[right] = temp;
+
+        return right;
     }
 
     /**
@@ -155,11 +154,11 @@ public class Sorting {
      * algorithm.
      *
      * @param data the array to be sorted
-     * @param min  the integer representation of the minimum value
-     * @param max  the integer representation of the maximum value
+     * @param min the integer representation of the minimum value
+     * @param max the integer representation of the maximum value
      */
     public static <T extends Comparable<? super T>> void
-    mergeSort(T[] data, int min, int max) {
+    mergeSort (T[] data, int min, int max) {
         T[] temp;
         int index1, left, right;
         /** return on list of length one */
@@ -174,28 +173,30 @@ public class Sorting {
         mergeSort(data, min, pivot);
         // sort right half of list
         mergeSort(data, pivot + 1, max);
+
         /** copy sorted data into workspace */
-        for (index1 = 0; index1 < size; index1++) {
+        for (index1 = 0; index1 < size; index1++){
             temp[index1] = data[min + index1];
-            /** merge the two sorted lists */
-            left = 0;
-            right = pivot - min + 1;
-            for (index1 = 0; index1 < size; index1++) {
-                if (right <= max - min) {
-                    if (left <= pivot - min) {
-                        if (temp[left].compareTo(temp[right]) > 0) {
-                            data[index1 + min] = temp[right++];
-                        } else {
-                            data[index1 + min] = temp[left++];
-                        }
-                    } else {
-                        data[index1 + min] = temp[right++];
-                    }
-                } else {
-                    data[index1 + min] = temp[left++];
-                }
-            }
         }
 
+        /** merge the two sorted lists */
+        left = 0;
+        right = pivot - min + 1;
+        for (index1 = 0; index1 < size; index1++) {
+            if (right <= max - min) {
+                if (left <= pivot - min) {
+                    if (temp[left].compareTo(temp[right]) > 0) {
+                        data[index1 + min] = temp[right++];
+                    }else {
+                        data[index1 + min] = temp[left++];
+                    }
+                } else {
+                    data[index1 + min] = temp[right++];
+                }
+            } else{
+                data[index1 + min] = temp[left++];
+            }
+        }
     }
+
 }

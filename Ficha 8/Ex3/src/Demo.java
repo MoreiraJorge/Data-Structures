@@ -19,14 +19,12 @@ public class Demo {
             System.out.println(cararray[i].toString());
         }
 
-        Sorting.quickSort(cararray,0,4);
+        Sorting.mergeSort(cararray,0,4);
 
         System.out.println("");
         System.out.println("Ordenado: ");
         for (int i = 0; i < cararray.length; ++i){
             System.out.println(cararray[i].toString());
         }
-
-
     }
 }
