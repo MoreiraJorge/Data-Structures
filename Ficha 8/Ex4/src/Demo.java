@@ -1,15 +1,14 @@
 import List.LinkedList;
 import MyExceptions.EmptyListException;
-import SortSearch.SortingandSearching;
 
 public class Demo {
     public static void main(String[] args) throws EmptyListException {
 
-        Car car1 = new Car("BMW", "M3 E46", 2005);
-        Car car2 = new Car("Subaru", "WRX STI", 2006);
-        Car car3 = new Car("McLaren", "730S", 2007);
-        Car car4 = new Car("Chevrolet", "Camaro SS", 2008);
-        Car car5 = new Car("Tesla", "model S", 2009);
+        Car car1 = new Car("BMW", "M3 E46", 2020);
+        Car car2 = new Car("Subaru", "WRX STI", 2018);
+        Car car3 = new Car("McLaren", "730S", 2020);
+        Car car4 = new Car("Chevrolet", "Camaro SS", 2015);
+        Car car5 = new Car("Tesla", "model S", 2005);
 
         LinkedList<Car> carlist = new LinkedList();
 
@@ -19,11 +18,15 @@ public class Demo {
         carlist.addElement(car4);
         carlist.addElement(car5);
 
+
+        System.out.println("Unsorted :");
         carlist.printList();
+        System.out.println("");
 
-        System.out.println("Resultado: " + SortingandSearching.linearSearch(carlist,car5));
-        //System.out.println("Resultado BinarySearch: " + SortingandSearching.binarySearch(carlist,0,4, car1));
+        Sorting.bubbleSort(carlist);
 
+        System.out.println("Sorted :");
+        carlist.printList();
 
     }
 }

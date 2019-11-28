@@ -28,7 +28,7 @@ public class Car implements Comparable {
     public String toString(){
         String text = "";
 
-        text += "Brand :" + this.brand;
+        text += "Brand :" + this.brand + " - Year:" + this.year;
 
         return text;
     }

@@ -90,14 +90,14 @@ public class LinkedList<T> {
     public void printList() throws EmptyListException {
         LinearNode Node = this.head;
         //só imprime se houver elementos na lista
-        if (Node != null) {
-            do {
-                // Print da informação
-                System.out.print(Node.toString() + "\n");
-                Node = Node.getNext();
-            } while (Node != null);
-        } else {
-            throw new EmptyListException("Can't print, List is Empty!!");
+        while (Node != null) {
+            System.out.println(Node.getData().toString());
+
+            Node = Node.getNext();
+        }
+
+        if (counter == 0){
+            throw new EmptyListException("Lista vazia");
         }
     }
 

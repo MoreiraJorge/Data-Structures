@@ -1,44 +1,37 @@
+
+import List.LinearNode;
+import List.LinkedList;
+
+import javax.sound.sampled.Line;
+
 public class Sorting {
 
-    /**
-     * @param data
-     * @param <T>
-     */
-    public static <T extends Comparable<? super T>> void
-    selectionSortmin(T[] data) {
-        int min;
-        T temp;
-        for (int index = 0; index < data.length - 1; index++) {
-            min = index;
-            for (int scan = index + 1; scan < data.length; scan++) {
-                if (data[scan].compareTo(data[min]) < 0) {
-                    min = scan;
+
+    public static <T extends Comparable<? super T>> void selectionSort(LinkedList<T> data) {
+
+        LinearNode<T> current = data.getHead();
+        LinearNode<T> temp;
+        LinearNode<T> min;
+        T tmpData;
+
+        while (current != null) {
+            min = current;
+            temp = current.getNext();
+
+            while (temp != null) {
+                if (temp.getData().compareTo(min.getData()) < 0) {
+                    min = temp;
                 }
+                temp = temp.getNext();
             }
-            /** Swap the values */
-            temp = data[min];
-            data[min] = data[index];
-            data[index] = temp;
-        }
-    }
 
-    public static <T extends Comparable<? super T>> void
-    selectionSortmax(T[] data) {
-
-        int max;
-        T temp;
-
-        for (int index = data.length - 1; index >= 0; index--) {
-            max = index;
-            for (int scan = index - 1; scan >= 0; scan--) {
-                if (data[scan].compareTo(data[max]) < 0) {
-                    max = scan;
-                }
+            if (min != current) {
+                tmpData = current.getData();
+                current.setData(min.getData());
+                min.setData(tmpData);
             }
-            /** Swap the values */
-            temp = data[max];
-            data[max] = data[index];
-            data[index] = temp;
+
+            current = current.getNext();
         }
     }
 
@@ -48,18 +41,24 @@ public class Sorting {
      *
      * @param data the array to be sorted
      */
-    public static <T extends Comparable<? super T>> void
-    insertionSort(T[] data) {
-        for (int index = 1; index < data.length; index++) {
-            T key = data[index];
-            int position = index;
-            /** Shift larger values to the right */
-            while (position > 0 && data[position - 1].compareTo(key) > 0) {
-                data[position] = data[position - 1];
-                position--;
-            }
+    public static <T extends Comparable<? super T>> void insertionSort(LinkedList<T> data) {
+        LinearNode<T> max = data.getHead().getNext();
+        LinearNode<T> current;
+        T tmp;
 
-            data[position] = key;
+        while (max != null) {
+            current = data.getHead();
+
+            while (current != max) {
+
+                if (max.getData().compareTo(current.getData()) < 0) {
+                    tmp = current.getData();
+                    current.setData(max.getData());
+                    max.setData(tmp);
+                }
+                current = current.getNext();
+            }
+            max = max.getNext();
         }
     }
 
@@ -69,20 +68,39 @@ public class Sorting {
      *
      * @param data the array to be sorted
      */
-    public static <T extends Comparable<? super T>> void
-    bubbleSort(T[] data) {
-        int position, scan;
-        T temp;
-        for (position = data.length - 1; position >= 0; position--) {
-            for (scan = 0; scan <= position - 1; scan++) {
-                if (data[scan].compareTo(data[scan + 1]) > 0) {
-                    /** Swap the values */
-                    temp = data[scan];
-                    data[scan] = data[scan + 1];
-                    data[scan + 1] = temp;
+    public static <T extends Comparable<? super T>> void bubbleSort(LinkedList<T> data) {
+        LinearNode<T> previous = data.getHead();
+        LinearNode<T> current = previous.getNext();
+        LinearNode<T> next = current.getNext();
+        T tmp;
+
+
+        while (current.getData().compareTo(previous.getData()) < 0 ||
+                current.getData().compareTo(next.getData()) > 0) {
+
+            previous = previous.getNext();
+            current = previous.getNext();
+            next = current.getNext();
+
+            while (current != null) {
+                next = current.getNext();
+                if (next != null && previous.getData().compareTo(next.getData()) > 0) {
+                    tmp = previous.getData();
+                    previous.setData(next.getData());
+                    next.setData(tmp);
                 }
+
+                if (previous.getData().compareTo(current.getData()) > 0) {
+                    tmp = previous.getData();
+                    previous.setData(current.getData());
+                    current.setData(tmp);
+                }
+
+                previous = previous.getNext();
+                current = previous.getNext();
             }
         }
+
     }
 
     /**
@@ -95,15 +113,6 @@ public class Sorting {
      */
     public static <T extends Comparable<? super T>> void
     quickSort(T[] data, int min, int max) {
-        int indexofpartition;
-        if (max - min > 0) {
-            /** Create partitions */
-            indexofpartition = findPartition(data, min, max);
-            /** Sort the left side */
-            quickSort(data, min, indexofpartition - 1);
-            /** Sort the right side */
-            quickSort(data, indexofpartition + 1, max);
-        }
     }
 
     /**
@@ -115,38 +124,7 @@ public class Sorting {
      */
     private static <T extends Comparable<? super T>> int
     findPartition(T[] data, int min, int max) {
-        int left, right;
-        T temp, partitionelement;
-        int middle = (min + max) / 2;
-        // use middle element as partition
-        partitionelement = data[middle];
-        left = min;
-        right = max;
-        while (left < right) {
-            /** search for an element that is > the partitionelement */
-            while (data[left].compareTo(partitionelement) < 0) {
-                left++;
-            }
-
-            /** search for an element that is < the partitionelement */
-            while (data[right].compareTo(partitionelement) > 0) {
-                right--;
-            }
-
-            /** swap the elements */
-            if (left < right) {
-                temp = data[left];
-                data[left] = data[right];
-                data[right] = temp;
-            }
-        }
-
-        /** move partition element to partition index*/
-        temp = data[min];
-        data[min] = data[right];
-        data[right] = temp;
-
-        return right;
+        return 0;
     }
 
     /**
@@ -154,49 +132,10 @@ public class Sorting {
      * algorithm.
      *
      * @param data the array to be sorted
-     * @param min the integer representation of the minimum value
-     * @param max the integer representation of the maximum value
+     * @param min  the integer representation of the minimum value
+     * @param max  the integer representation of the maximum value
      */
     public static <T extends Comparable<? super T>> void
-    mergeSort (T[] data, int min, int max) {
-        T[] temp;
-        int index1, left, right;
-        /** return on list of length one */
-        if (min == max) {
-            return;
-        }
-        /** find the length and the midpoint of the list */
-        int size = max - min + 1;
-        int pivot = (min + max) / 2;
-        temp = (T[]) (new Comparable[size]);
-        // sort left half of list
-        mergeSort(data, min, pivot);
-        // sort right half of list
-        mergeSort(data, pivot + 1, max);
-
-        /** copy sorted data into workspace */
-        for (index1 = 0; index1 < size; index1++){
-            temp[index1] = data[min + index1];
-        }
-
-        /** merge the two sorted lists */
-        left = 0;
-        right = pivot - min + 1;
-        for (index1 = 0; index1 < size; index1++) {
-            if (right <= max - min) {
-                if (left <= pivot - min) {
-                    if (temp[left].compareTo(temp[right]) > 0) {
-                        data[index1 + min] = temp[right++];
-                    }else {
-                        data[index1 + min] = temp[left++];
-                    }
-                } else {
-                    data[index1 + min] = temp[right++];
-                }
-            } else{
-                data[index1 + min] = temp[left++];
-            }
-        }
+    mergeSort(T[] data, int min, int max) {
     }
-
 }

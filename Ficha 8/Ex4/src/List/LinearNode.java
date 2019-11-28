@@ -53,6 +53,7 @@ public class LinearNode<T> {
      *
      * @return
      */
+    @Override
     public String toString(){
         return data.toString();
     }
