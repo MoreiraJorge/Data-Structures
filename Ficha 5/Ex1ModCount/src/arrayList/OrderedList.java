@@ -16,15 +16,14 @@ public class OrderedList<T> extends ArrayList<T>
 
             if (isEmpty()) {
                 array[0] = element;
-                size++;
-                rear++;
+
             } else {
 
                 boolean found = false;
 
                 int current = 0;
 
-                while (current < size && found == false) {
+                while (current < size() && found == false) {
                     Comparable<T> tmp = (Comparable<T>) array[current];
                     if (tmp.compareTo(element) > 0) {
                         found = true;
@@ -41,10 +40,9 @@ public class OrderedList<T> extends ArrayList<T>
                 } else {
                     array[rear] = element;
                 }
-                rear++;
-                size++;
-                modCount++;
             }
+            rear++;
+            modCount++;
         } else {
             System.out.println("Elemento não é comparable!!!");
         }

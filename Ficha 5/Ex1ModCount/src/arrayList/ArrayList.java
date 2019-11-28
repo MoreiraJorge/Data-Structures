@@ -8,49 +8,49 @@ import java.util.Iterator;
 
 public class ArrayList<T> implements ListADT<T> {
 
-    private class ArrayListIterator<T> implements Iterator<T> {
-        private int current = 0;
-        private int expectedModCount = modCount;
+    private final int DEFAULT_SIZE = 5;
 
-        @Override
-        public boolean hasNext() {
-            if (current < size) {
-                return true;
-            }
-            return false;
+    protected T[] array;
+    protected int rear;
+    protected int modCount = 0;
 
+    private class ArrayListIterator implements Iterator {
+
+        private int current;
+        private int expectedModCount;
+
+        public ArrayListIterator() {
+            this.expectedModCount = modCount;
+            this.current = 0;
         }
 
         @Override
-        public T next() {
-
+        public boolean hasNext() {
             if (expectedModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
 
-            if (hasNext()) {
-                T tmp = (T) array[current];
-                current++;
-                return tmp;
+            return (current < rear);
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new ArrayIndexOutOfBoundsException();
             }
-            throw new ArrayIndexOutOfBoundsException();
+
+            T tmp = (T) array[current];
+            current++;
+            return tmp;
         }
 
     }
-
-    private int DEFAULT_SIZE = 5;
-    protected T[] array;
-    protected int size;
-    protected int rear;
-    protected int modCount = 0;
-
 
     /**
      * Default / Empty ArrayList Constructor
      */
     public ArrayList() {
         array = (T[]) (new Comparable[DEFAULT_SIZE]);
-        this.size = 0;
         this.rear = 0;
     }
 
@@ -61,38 +61,36 @@ public class ArrayList<T> implements ListADT<T> {
      */
     public ArrayList(int defaultcapacity) {
         array = (T[]) (new Comparable[defaultcapacity]);
-        this.size = 0;
         this.rear = 0;
     }
 
     @Override
     public T removeFirst() {
-
-        if (isEmpty() == true) {
+        if (isEmpty()) {
             return null;
         }
 
         T tmp = array[0];
-        size--;
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size() - 1; i++) {
             array[i] = array[i + 1];
         }
 
-        modCount++;
+        this.rear--;
+        this.modCount++;
         return tmp;
     }
 
     @Override
     public T removeLast() {
-        if (isEmpty() == true) {
+
+        if (isEmpty()) {
             return null;
         }
 
         T tmp = array[rear - 1];
         array[rear - 1] = null;
         rear--;
-        size--;
 
         modCount++;
         return tmp;
@@ -105,22 +103,24 @@ public class ArrayList<T> implements ListADT<T> {
 
         if (pos == -1) {
             return null;
-        } else if (pos == 0) {
-            return removeFirst();
-        } else if (pos == rear - 1) {
-            return removeLast();
         }
-
-        size--;
-        rear--;
 
         T tmp = array[pos];
 
-        for (int i = pos; i < size(); i++) {
-            array[i] = array[i + 1];
+        if (pos == 0) {
+            tmp = removeFirst();
+        } else if (pos == rear - 1) {
+            tmp = removeLast();
+        } else {
+
+            for (int i = pos; i < size() - 1; i++) {
+                array[i] = array[i + 1];
+            }
+
+            this.rear--;
+            this.modCount++;
         }
 
-        modCount++;
         return tmp;
     }
 
@@ -129,17 +129,21 @@ public class ArrayList<T> implements ListADT<T> {
         if (isEmpty()) {
             return null;
         }
+
         return array[0];
     }
 
     @Override
     public T last() {
+        if (isEmpty()) {
+            return null;
+        }
         return array[rear - 1];
     }
 
     @Override
     public boolean contains(T target) {
-        return (search(target) > -1);
+        return (search(target) != -1);
     }
 
     @Override
@@ -149,25 +153,21 @@ public class ArrayList<T> implements ListADT<T> {
 
     @Override
     public int size() {
-        return size;
+        return this.rear;
     }
 
     @Override
     public Iterator<T> iterator() {
-        ArrayListIterator itr = new ArrayListIterator<T>();
-        return itr;
+        return new ArrayListIterator();
     }
 
     @Override
     public String toString() {
         String text = "";
-        Iterator<T> it = iterator();
-        if (isEmpty() == true) {
-            return "Empty List!";
-        }
+        Iterator it = iterator();
 
         while (it.hasNext()) {
-            text += it.next().toString() + "\n";
+            text += "\n" + it.next().toString();
         }
 
         return text;
