@@ -1,4 +1,4 @@
-package UnorderedArrayListPkg;
+package ArrayUnorderedListPkg;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

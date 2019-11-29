@@ -1,4 +1,4 @@
-package UnorderedArrayListPkg;
+package ArrayUnorderedListPkg;
 
 import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyListException;

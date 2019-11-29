@@ -1,4 +1,4 @@
-package UnorderedArrayListPkg;
+package ArrayUnorderedListPkg;
 
 public class ArrayUnorderedList<T> extends ArrayList<T> implements Interfaces.UnorderedArrayListADT<T> {
 
