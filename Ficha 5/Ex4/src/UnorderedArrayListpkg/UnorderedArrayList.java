@@ -16,14 +16,12 @@ public class UnorderedArrayList<T> extends ArrayList<T> implements Interfaces.Un
 
         modCount++;
         rear++;
-        size++;
     }
 
     @Override
     public void addToRear(T element) {
         array[rear] = element;
         rear++;
-        size++;
         modCount++;
     }
 
@@ -32,22 +30,27 @@ public class UnorderedArrayList<T> extends ArrayList<T> implements Interfaces.Un
         boolean found = false;
         int current = 0;
 
-        while (current < size && found == false) {
+        while (current < size() && found == false) {
+
             if (array[current].equals(target)) {
+
                 found = true;
+
             } else {
                 current++;
             }
         }
 
         if (found = true) {
-                for (int i = rear - 1; i > current; i--) {
-                    array[i + 1] = array[i];
-                }
-                array[current + 1] = element;
-                rear++;
-                size++;
-                modCount++;
+
+            for (int i = rear - 1; i > current; i--) {
+                array[i + 1] = array[i];
+            }
+
+            array[current + 1] = element;
+            rear++;
+            modCount++;
+
         } else {
             addToRear(element);
         }
