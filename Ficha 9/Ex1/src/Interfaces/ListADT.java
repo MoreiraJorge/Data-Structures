@@ -1,5 +1,8 @@
 package Interfaces;
 
+import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyListException;
+
 import java.util.Iterator;
 
 public interface ListADT<T> extends Iterable<T> {
@@ -8,35 +11,35 @@ public interface ListADT<T> extends Iterable<T> {
      *
      * @return the first element from this list
      */
-    public T removeFirst();
+    public T removeFirst() throws EmptyListException;
 
     /**
      * Removes and returns the last element from this list.
      *
      * @return the last element from this list
      */
-    public T removeLast();
+    public T removeLast() throws EmptyListException;
 
     /**
      * Removes and returns the specified element from this list.
      *
      * @param element the element to be removed from the list
      */
-    public T remove(T element);
+    public T remove(T element) throws EmptyListException, ElementNotFoundException;
 
     /**
      * Returns a reference to the first element in this list.
      *
      * @return a reference to the first element in this list
      */
-    public T first();
+    public T first() throws EmptyListException;
 
     /**
      * Returns a reference to the last element in this list.
      *
      * @return a reference to the last element in this list
      */
-    public T last();
+    public T last() throws EmptyListException;
 
     /**
      * Returns true if this list contains the specified target

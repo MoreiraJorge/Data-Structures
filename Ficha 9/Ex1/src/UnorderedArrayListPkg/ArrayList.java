@@ -1,5 +1,7 @@
 package UnorderedArrayListPkg;
 
+import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyListException;
 import Interfaces.ListADT;
 import java.util.Iterator;
 
@@ -30,9 +32,9 @@ public class ArrayList<T> implements ListADT<T> {
     }
 
     @Override
-    public T removeFirst() {
+    public T removeFirst() throws EmptyListException{
         if (isEmpty()) {
-            return null;
+            throw new EmptyListException("Lista Vazia");
         }
 
         T tmp = array[0];
@@ -47,9 +49,9 @@ public class ArrayList<T> implements ListADT<T> {
     }
 
     @Override
-    public T removeLast() {
+    public T removeLast() throws EmptyListException {
         if (isEmpty()) {
-            return null;
+            throw new EmptyListException("Lista vazia");
         }
 
         T tmp = array[rear - 1];
@@ -61,12 +63,12 @@ public class ArrayList<T> implements ListADT<T> {
     }
 
     @Override
-    public T remove(T element) {
+    public T remove(T element) throws EmptyListException, ElementNotFoundException {
 
         int pos = search(element);
 
         if (pos == -1) {
-            return null;
+            throw new ElementNotFoundException("Elemento Não encontrado");
         }
 
         T tmp = array[pos];
@@ -89,17 +91,17 @@ public class ArrayList<T> implements ListADT<T> {
     }
 
     @Override
-    public T first() {
+    public T first() throws EmptyListException{
         if (isEmpty()) {
-            return null;
+            throw new EmptyListException("Lista Vazia");
         }
         return array[0];
     }
 
     @Override
-    public T last() {
+    public T last() throws EmptyListException {
         if (isEmpty()) {
-            return null;
+            throw new EmptyListException("Lista Vazia");
         }
 
         return array[rear - 1];

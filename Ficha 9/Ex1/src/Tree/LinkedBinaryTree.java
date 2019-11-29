@@ -6,6 +6,9 @@ import UnorderedArrayListPkg.ArrayUnorderedList;
 
 import java.util.Iterator;
 
+/**
+ * @author morei
+ */
 public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
 
     protected int count;
@@ -50,13 +53,23 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
         return false;
     }
 
+    /**
+     * Returns a reference to the specified target element if it is
+     * found in this binary tree. Throws a NoSuchElementException if
+     * the specified target element is not found in the binary tree.
+     *
+     * @param targetElement the element being sought in this tree
+     * @return a reference to the specified target
+     * @throws ElementNotFoundException if an element not found
+     *                                  exception occurs
+     */
     @Override
     public T find(T targetElement) throws ElementNotFoundException {
 
         BinaryTreeNode<T> current = findAgain(targetElement, root);
 
         if (current == null) {
-            throw new ElementNotFoundException("binary tree");
+            throw new ElementNotFoundException("Not found in binary tree");
         }
         return (current.element);
     }
@@ -86,6 +99,13 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
         return temp;
     }
 
+    /**
+     * Performs an inorder traversal on this binary tree by calling an
+     * overloaded, recursive inorder method that starts with
+     * the root.
+     *
+     * @return an in order iterator over this binary tree
+     */
     @Override
     public Iterator<T> iteratorInOrder() {
 
@@ -103,11 +123,13 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
      * @param tempList the temporary list for use in this traversal
      */
     protected void inorder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+
         if (node != null) {
             inorder(node.left, tempList);
             tempList.addToRear(node.element);
             inorder(node.right, tempList);
         }
+
     }
 
     @Override
