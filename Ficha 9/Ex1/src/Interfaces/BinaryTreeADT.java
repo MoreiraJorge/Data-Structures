@@ -88,5 +88,5 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorLevelOrder() throws EmptyListException;
+    public Iterator<T> iteratorLevelOrder() throws EmptyListException, ElementNotFoundException;
 }

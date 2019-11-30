@@ -160,6 +160,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
 
     }
 
+
     @Override
     public Iterator<T> iteratorPostOrder() {
         ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
@@ -169,7 +170,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     }
 
     /**
-     * Performs a recursive preorder traversal.
+     * Performs a recursive postorder traversal.
      *
      * @param node     the node to be used as the root
      *                 for this traversal
@@ -186,10 +187,13 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     }
 
     @Override
-    public Iterator<T> iteratorLevelOrder() throws EmptyListException {
+    public Iterator<T> iteratorLevelOrder() throws EmptyListException, ElementNotFoundException {
         LinkedQueue<T> Nodes = new LinkedQueue<>();
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
 
+        if(root == null){
+            throw new ElementNotFoundException("Root é null");
+        }
 
         Nodes.enqueue((T) root);
 
