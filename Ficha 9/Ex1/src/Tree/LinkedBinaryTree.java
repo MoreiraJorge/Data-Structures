@@ -1,8 +1,10 @@
 package Tree;
 
 import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyListException;
 import Interfaces.BinaryTreeADT;
 import ArrayUnorderedListPkg.ArrayUnorderedList;
+import Queue.LinkedQueue;
 
 import java.util.Iterator;
 
@@ -184,7 +186,28 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     }
 
     @Override
-    public Iterator<T> iteratorLevelOrder() {
-        return null;
+    public Iterator<T> iteratorLevelOrder() throws EmptyListException {
+        LinkedQueue<T> Nodes = new LinkedQueue<>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
+
+
+        Nodes.enqueue((T) root);
+
+        while(!Nodes.isEmpty()){
+
+           BinaryTreeNode tmp = (BinaryTreeNode) Nodes.dequeue();
+
+           if (tmp != null){
+
+               resultList.addToRear((T) tmp);
+
+               if(tmp.numChildren() >0) {
+                   Nodes.enqueue((T) tmp.left);
+                   Nodes.enqueue((T) tmp.right);
+               }
+           }
+        }
+
+        return resultList.iterator();
     }
 }
