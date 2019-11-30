@@ -132,14 +132,55 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
 
     }
 
+
     @Override
     public Iterator<T> iteratorPreOrder() {
-        return null;
+        ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
+        preorder(root, tempList);
+
+        return tempList.iterator();
+    }
+
+    /**
+     * Performs a recursive preorder traversal.
+     *
+     * @param node     the node to be used as the root
+     *                 for this traversal
+     * @param tempList the temporary list for use in this traversal
+     */
+    protected void preorder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+
+        if (node != null) {
+            tempList.addToRear(node.element);
+            preorder(node.left, tempList);
+            preorder(node.right, tempList);
+        }
+
     }
 
     @Override
     public Iterator<T> iteratorPostOrder() {
-        return null;
+        ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
+        postorder(root, tempList);
+
+        return tempList.iterator();
+    }
+
+    /**
+     * Performs a recursive preorder traversal.
+     *
+     * @param node     the node to be used as the root
+     *                 for this traversal
+     * @param tempList the temporary list for use in this traversal
+     */
+    protected void postorder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+
+        if (node != null) {
+            postorder(node.left, tempList);
+            postorder(node.right, tempList);
+            tempList.addToRear(node.element);
+        }
+
     }
 
     @Override
