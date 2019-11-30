@@ -6,7 +6,10 @@ import Interfaces.ListADT;
 import java.util.Iterator;
 
 
-public class ArrayList<T> implements ListADT<T> {
+/**
+ * @author morei
+ */
+public abstract class ArrayList<T> implements ListADT<T> {
 
     private int DEFAULT_SIZE = 5;
     protected T[] array;
