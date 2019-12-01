@@ -200,7 +200,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
             throw new ElementNotFoundException("Root é null");
         }
 
-        Nodes.enqueue((T) root);
+        Nodes.enqueue(root.element);
 
         while(!Nodes.isEmpty()){
 
@@ -211,8 +211,8 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
                resultList.addToRear(tmp.element);
 
                if(tmp.numChildren() > 0) {
-                   Nodes.enqueue((T) tmp.left);
-                   Nodes.enqueue((T) tmp.right);
+                   Nodes.enqueue(tmp.left.element);
+                   Nodes.enqueue(tmp.right.element);
                }
            }
         }
