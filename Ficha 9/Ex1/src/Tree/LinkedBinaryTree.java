@@ -36,23 +36,28 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     }
 
     @Override
-    public T getRoot() {
-        return null;
+    public T getRoot() throws ElementNotFoundException {
+
+        if(isEmpty()){
+            throw new ElementNotFoundException("Root is null");
+        }
+
+        return root.element;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return count == 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return count;
     }
 
     @Override
-    public boolean contains(T targetElement) {
-        return false;
+    public boolean contains(T targetElement) throws ElementNotFoundException {
+        return targetElement == find(targetElement);
     }
 
     /**
@@ -199,13 +204,13 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
 
         while(!Nodes.isEmpty()){
 
-           BinaryTreeNode tmp = (BinaryTreeNode) Nodes.dequeue();
+           BinaryTreeNode<T> tmp = (BinaryTreeNode<T>) Nodes.dequeue();
 
            if (tmp != null){
 
-               resultList.addToRear((T) tmp);
+               resultList.addToRear(tmp.element);
 
-               if(tmp.numChildren() >0) {
+               if(tmp.numChildren() > 0) {
                    Nodes.enqueue((T) tmp.left);
                    Nodes.enqueue((T) tmp.right);
                }

@@ -12,7 +12,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return a reference to the root
      */
-    public T getRoot();
+    public T getRoot() throws ElementNotFoundException;
 
     /**
      * Returns true if this binary tree is empty and false otherwise.
@@ -35,7 +35,7 @@ public interface BinaryTreeADT<T> {
      * @param targetElement the element being sought in the tree
      * @return true if the tree contains the target element
      */
-    public boolean contains(T targetElement);
+    public boolean contains(T targetElement) throws ElementNotFoundException;
 
     /**
      * Returns a reference to the specified element if it is found in
