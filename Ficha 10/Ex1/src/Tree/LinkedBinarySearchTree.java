@@ -4,6 +4,8 @@ import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyListException;
 import Interfaces.BinarySearchTreeADT;
 
+import java.util.Iterator;
+
 /**
  * @author morei
  */
@@ -161,8 +163,19 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
     }
 
     @Override
-    public void removeAllOccurrences(T targetElement) {
+    public void removeAllOccurrences(T targetElement) throws ElementNotFoundException, EmptyListException {
+        Iterator itr = iteratorInOrder();
+        int ocurrences = 0;
 
+        while(itr.hasNext()){
+            if(itr.next() == targetElement){
+                ocurrences++;
+            }
+        }
+
+        for(int i = 0; i < ocurrences; ++i){
+           removeElement(targetElement);
+        }
     }
 
     @Override

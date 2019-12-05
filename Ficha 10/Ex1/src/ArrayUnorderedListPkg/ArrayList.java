@@ -194,4 +194,15 @@ abstract class ArrayList<T> implements ListADT<T> {
         return -1;
     }
 
+    /**
+     * Expand array size when adding to full array
+     */
+    protected void expandCapacity(){
+        T[] tmp = (T[])(new Object[array.length + DEFAULT_SIZE]);
+        for(int i = 0; i < array.length; i++){
+            tmp[i] = array[i];
+        }
+        array = tmp;
+    }
+
 }

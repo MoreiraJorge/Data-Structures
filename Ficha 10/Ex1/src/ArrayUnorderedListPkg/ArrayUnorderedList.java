@@ -1,5 +1,8 @@
 package ArrayUnorderedListPkg;
 
+import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyListException;
+
 public class ArrayUnorderedList<T> extends ArrayList<T> implements Interfaces.UnorderedArrayListADT<T> {
 
     @Override
@@ -7,12 +10,18 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements Interfaces.Un
 
         if (isEmpty()) {
             array[0] = element;
-        }
+        } else {
 
-        for (int i = rear - 1; i >= 0; i--) {
-            array[i + 1] = array[i];
+            if (rear == array.length) {
+                expandCapacity();
+            }
+
+            for (int i = rear - 1; i >= 0; i--) {
+                array[i + 1] = array[i];
+            }
+            array[0] = element;
+
         }
-        array[0] = element;
 
         modCount++;
         rear++;
@@ -20,41 +29,60 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements Interfaces.Un
 
     @Override
     public void addToRear(T element) {
-        array[rear] = element;
+        if (isEmpty()) {
+            array[0] = element;
+
+        } else {
+
+            if (rear == array.length) {
+                expandCapacity();
+            }
+
+            array[rear] = element;
+        }
+
         rear++;
         modCount++;
     }
 
     @Override
-    public void addAfter(T element, T target) {
+    public void addAfter(T element, T target) throws EmptyListException, ElementNotFoundException {
         boolean found = false;
         int current = 0;
+        if (!isEmpty()) {
 
-        while (current < size() && found == false) {
+            if (rear == array.length) {
+                expandCapacity();
+            }
 
-            if (array[current].equals(target)) {
+            while (current < size() && found == false) {
 
-                found = true;
+                if (array[current].equals(target)) {
+
+                    found = true;
+
+                } else {
+                    current++;
+                }
+            }
+
+            if (found = true) {
+
+                for (int i = rear - 1; i > current; i--) {
+                    array[i + 1] = array[i];
+                }
+
+                array[current + 1] = element;
+                rear++;
+                modCount++;
 
             } else {
-                current++;
+                throw new ElementNotFoundException("Elemento nao encontrado");
             }
-        }
-
-        if (found = true) {
-
-            for (int i = rear - 1; i > current; i--) {
-                array[i + 1] = array[i];
-            }
-
-            array[current + 1] = element;
-            rear++;
-            modCount++;
 
         } else {
-            addToRear(element);
+            throw new EmptyListException("List is Empty");
         }
-
     }
 
 }

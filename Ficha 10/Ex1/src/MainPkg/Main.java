@@ -46,6 +46,27 @@ public class Main {
                 }
 
                 break;
+            case 3:
+                tree.addElement(3);
+                tree.addElement(4);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(6);
+
+                itr = tree.iteratorInOrder();
+                while(itr.hasNext()){
+                    System.out.println(itr.next());
+                }
+
+                tree.removeAllOccurrences(2);
+                System.out.println("----removed occ-----");
+                itr = tree.iteratorInOrder();
+                while(itr.hasNext()){
+                    System.out.println(itr.next());
+                }
+
+                break;
             default:
                 break;
         }
@@ -55,6 +76,6 @@ public class Main {
 
 
     public static void main(String[] args) throws EmptyListException, ElementNotFoundException {
-        test(2);
+        test(3);
     }
 }
