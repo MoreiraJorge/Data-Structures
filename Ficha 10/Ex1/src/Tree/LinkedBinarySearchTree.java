@@ -1,6 +1,7 @@
 package Tree;
 
 import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyListException;
 import Interfaces.BinarySearchTreeADT;
 
 /**
@@ -64,9 +65,10 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
     }
 
     @Override
-    public T removeElement(T targetElement) throws ElementNotFoundException {
+    public T removeElement(T targetElement) throws ElementNotFoundException, EmptyListException {
         T result = null;
         if (!isEmpty()) {
+
             if (((Comparable) targetElement).equals(root.element)) {
                 result = root.element;
                 root = replacement(root);
@@ -109,7 +111,9 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
                     throw new ElementNotFoundException("Not found in binary search tree");
                 }
             }
-        } // end outer if
+        } else {// end outer if
+            throw new EmptyListException("list is empty");
+        }
         return result;
     }
 
