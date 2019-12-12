@@ -38,26 +38,26 @@ public interface BinarySearchTreeADT<T> extends BinaryTreeADT<T> {
      *
      * @return the smallest element from this tree.
      */
-    public T removeMin();
+    public T removeMin() throws EmptyListException, ElementNotFoundException;
 
     /**
      * Removes and returns the largest element from this tree.
      *
      * @return the largest element from this tree
      */
-    public T removeMax();
+    public T removeMax() throws ElementNotFoundException, EmptyListException;
 
     /**
      * Returns a reference to the smallest element in this tree.
      *
      * @return a reference to the smallest element in this tree
      */
-    public T findMin();
+    public T findMin() throws EmptyListException;
 
     /**
      * Returns a reference to the largest element in this tree.
      *
      * @return a reference to the largest element in this tree
      */
-    public T findMax();
+    public T findMax() throws EmptyListException;
 }

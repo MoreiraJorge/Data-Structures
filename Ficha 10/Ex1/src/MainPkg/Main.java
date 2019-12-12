@@ -13,7 +13,7 @@ public class Main {
         LinkedBinarySearchTree<Integer> tree = new LinkedBinarySearchTree();
         Iterator<Integer> itr;
 
-        switch(num){
+        switch (num) {
             case 1:
 
                 tree.addElement(3);
@@ -23,8 +23,8 @@ public class Main {
                 tree.addElement(1);
                 tree.addElement(6);
 
-                 itr = tree.iteratorInOrder();
-                while(itr.hasNext()){
+                itr = tree.iteratorInOrder();
+                while (itr.hasNext()) {
                     System.out.println(itr.next());
                 }
 
@@ -41,7 +41,7 @@ public class Main {
                 tree.removeElement(3);
 
                 itr = tree.iteratorInOrder();
-                while(itr.hasNext()){
+                while (itr.hasNext()) {
                     System.out.println(itr.next());
                 }
 
@@ -55,17 +55,46 @@ public class Main {
                 tree.addElement(6);
 
                 itr = tree.iteratorInOrder();
-                while(itr.hasNext()){
+                while (itr.hasNext()) {
                     System.out.println(itr.next());
                 }
 
                 tree.removeAllOccurrences(2);
                 System.out.println("----removed occ-----");
                 itr = tree.iteratorInOrder();
-                while(itr.hasNext()){
+                while (itr.hasNext()) {
                     System.out.println(itr.next());
                 }
 
+                break;
+            case 4:
+
+                tree.addElement(3);
+                tree.addElement(4);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(6);
+
+                System.out.println("Min expected is: 2  result:" + tree.findMin());
+                System.out.println("Max expected is: 6  result:" + tree.findMax());
+
+                break;
+            case 5:
+                tree.addElement(3);
+                tree.addElement(4);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(2);
+                tree.addElement(6);
+
+                tree.removeMax();
+                tree.removeMin();
+
+                itr = tree.iteratorInOrder();
+                while (itr.hasNext()) {
+                    System.out.println(itr.next());
+                }
                 break;
             default:
                 break;
@@ -76,6 +105,6 @@ public class Main {
 
 
     public static void main(String[] args) throws EmptyListException, ElementNotFoundException {
-        test(3);
+        test(5);
     }
 }

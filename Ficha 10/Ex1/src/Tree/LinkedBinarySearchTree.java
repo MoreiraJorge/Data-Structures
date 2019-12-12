@@ -167,34 +167,54 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         Iterator itr = iteratorInOrder();
         int ocurrences = 0;
 
-        while(itr.hasNext()){
-            if(itr.next() == targetElement){
+        while (itr.hasNext()) {
+            if (itr.next() == targetElement) {
                 ocurrences++;
             }
         }
 
-        for(int i = 0; i < ocurrences; ++i){
-           removeElement(targetElement);
+        for (int i = 0; i < ocurrences; ++i) {
+            removeElement(targetElement);
         }
     }
 
     @Override
-    public T removeMin() {
-        return null;
+    public T removeMin() throws EmptyListException, ElementNotFoundException {
+        return removeElement(findMin());
     }
 
     @Override
-    public T removeMax() {
-        return null;
+    public T removeMax() throws ElementNotFoundException, EmptyListException {
+        return  removeElement(findMax());
     }
 
     @Override
-    public T findMin() {
-        return null;
+    public T findMin() throws EmptyListException {
+        if (isEmpty()) {
+            throw new EmptyListException("Empty List");
+        }
+
+        BinaryTreeNode<T> current = root;
+
+        while (current.left != null) {
+            current = current.left;
+        }
+
+        return current.element;
     }
 
     @Override
-    public T findMax() {
-        return null;
+    public T findMax() throws EmptyListException {
+        if (isEmpty()) {
+            throw new EmptyListException("Empty List");
+        }
+
+        BinaryTreeNode<T> current = root;
+
+        while (current.right != null) {
+            current = current.right;
+        }
+
+        return current.element;
     }
 }
