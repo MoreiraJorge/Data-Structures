@@ -129,12 +129,13 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
      */
     private BinaryTreeNode<T> replacement(BinaryTreeNode<T> node) {
         BinaryTreeNode<T> result = null;
+        // Quando o node é uma folha
         if ((node.left == null) && (node.right == null)) {
             result = null;
-
+            // Quando o node só tem um filho á esquerda, o node é subtituido pelo seu filho
         } else if ((node.left != null) && (node.right == null)) {
             result = node.left;
-
+            // Quando o node só tem um filho á direita, o node é subtituido pelo seu filho
         } else if ((node.left == null) && (node.right != null)) {
             result = node.right;
 
@@ -142,15 +143,15 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
 
             BinaryTreeNode<T> current = node.right;
             BinaryTreeNode<T> parent = node;
-
+            // Chegar ao final do filho direito do lado esquerdo
             while (current.left != null) {
                 parent = current;
                 current = current.left;
             }
-
+            // se o node sem filho á esquerda for o igual ao filho direito do node a remover o filho esquerdo passa a ser filho esquerdo do filho direito
             if (node.right == current) {
                 current.left = node.left;
-
+                // se o node filho da direita tiver nodes á esquerda, esse node substituirá o node removido e o node pai dele passará a ser seu filho á direita
             } else {
                 parent.left = current.right;
                 current.right = node.right;
@@ -164,18 +165,14 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
 
     @Override
     public void removeAllOccurrences(T targetElement) throws ElementNotFoundException, EmptyListException {
-        Iterator itr = iteratorInOrder();
-        int ocurrences = 0;
+        removeElement(targetElement);
 
-        while (itr.hasNext()) {
-            if (itr.next() == targetElement) {
-                ocurrences++;
+        try{
+            while(true){
+                removeElement(targetElement);
             }
-        }
+        } catch(Exception e) {}
 
-        for (int i = 0; i < ocurrences; ++i) {
-            removeElement(targetElement);
-        }
     }
 
     @Override

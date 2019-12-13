@@ -3,30 +3,33 @@ package MainPkg;
 
 import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyListException;
-import Tree.LinkedBinarySearchTree;
+import Tree.ArrayBinarySearchTree;
 
 import java.util.Iterator;
 
 public class Main {
 
     public static void test(int num) throws EmptyListException, ElementNotFoundException {
-        LinkedBinarySearchTree<Integer> tree = new LinkedBinarySearchTree();
+        ArrayBinarySearchTree<Integer> tree = new ArrayBinarySearchTree();
         Iterator<Integer> itr;
 
         switch (num) {
             case 1:
 
+                tree.addElement(1);
                 tree.addElement(3);
-                tree.addElement(4);
+                /*
                 tree.addElement(2);
                 tree.addElement(5);
                 tree.addElement(1);
                 tree.addElement(6);
-
+                */
                 itr = tree.iteratorLevelOrder();
                 while (itr.hasNext()) {
                     System.out.println(itr.next());
                 }
+
+                System.out.println(tree.find(3));
 
                 break;
             case 2:
@@ -72,20 +75,20 @@ public class Main {
                 tree.addElement(3);
                 tree.addElement(4);
                 tree.addElement(2);
-                tree.addElement(2);
-                tree.addElement(2);
+                tree.addElement(1);
+                tree.addElement(5);
                 tree.addElement(6);
 
-                System.out.println("Min expected is: 2  result:" + tree.findMin());
+                System.out.println("Min expected is: 1  result:" + tree.findMin());
                 System.out.println("Max expected is: 6  result:" + tree.findMax());
 
                 break;
             case 5:
                 tree.addElement(3);
                 tree.addElement(4);
+                tree.addElement(7);
                 tree.addElement(2);
-                tree.addElement(2);
-                tree.addElement(2);
+                tree.addElement(8);
                 tree.addElement(6);
 
                 tree.removeAllOccurrences(2);
@@ -98,12 +101,11 @@ public class Main {
             default:
                 break;
         }
-
-
     }
 
 
     public static void main(String[] args) throws EmptyListException, ElementNotFoundException {
-        test(1);
+        test(4);
     }
+
 }
