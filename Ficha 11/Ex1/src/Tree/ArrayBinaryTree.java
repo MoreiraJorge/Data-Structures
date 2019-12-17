@@ -9,6 +9,7 @@ import Queue.LinkedQueue;
 import java.util.Iterator;
 
 abstract class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
+
     protected int count;
     protected T[] tree;
     private final int CAPACITY = 50;
@@ -196,11 +197,11 @@ abstract class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
 
             if (tree[tmp] != null) {
                 resultList.addToRear(tree[tmp]);
-                if (tree[tmp* 2 + 1] != null) {
+                if ((tmp * 2 + 1) < count && tree[tmp* 2 + 1] != null) {
                     Nodes.enqueue(tmp * 2 + 1);
                 }
 
-                if (tree[(tmp + 1) * 2] != null) {
+                if (((tmp + 1) * 2) < tree.length && tree[(tmp + 1) * 2] != null) {
                     Nodes.enqueue((tmp + 1) * 2);
                 }
             }
