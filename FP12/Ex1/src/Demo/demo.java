@@ -114,6 +114,7 @@ public class demo {
                 graph.addEdge(2, 4);
                 graph.addEdge(2, 2);
                 graph.addEdge(1, 1);
+                graph.addEdge(4, 3);
                 graph.addEdge(4, 4);
                 graph.addEdge(1, 4);
                 System.out.println(graph.toString());
