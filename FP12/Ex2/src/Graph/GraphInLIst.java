@@ -1,6 +1,8 @@
 package Graph;
 
+
 import Lists.UnorderedArray;
+import Lists.UnorderedListADT;
 import Queue.LinkedQueue;
 import Stack.EmptyCollectionException;
 import Stack.LinkedStack;
@@ -9,155 +11,131 @@ import java.util.Iterator;
 
 public class GraphInLIst<T> implements GraphADT<T> {
 
-    protected final int DEFAULT_CAPACITY = 4;
-    protected int numVertices; // number of vertices in the graph
-    protected boolean[][] adjMatrix; // adjacency matrix
-    protected T[] vertices; // values of vertices
+    protected int numVertices;
+    protected UnorderedListADT<GraphNode<T>> verticesList;
 
     /**
      * Creates an empty graph.
      */
     public GraphInLIst() {
         numVertices = 0;
-        this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
-        this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
+        this.verticesList = new UnorderedArray<GraphNode<T>>();
     }
 
     @Override
     public void addVertex(T vertex) {
-        if (numVertices == vertices.length) {
-            expandCapacity();
-        }
-
-        vertices[numVertices] = vertex;
-        for (int i = 0; i < adjMatrix.length; i++) {
-            adjMatrix[numVertices][i] = false;
-            adjMatrix[i][numVertices] = false;
-        }
+        verticesList.addToRear(new GraphNode(vertex));
         numVertices++;
-    }
-
-    private void expandCapacity() {
-        T[] tmp = (T[]) (new Object[vertices.length + DEFAULT_CAPACITY]);
-        for (int i = 0; i < vertices.length; i++) {
-            tmp[i] = vertices[i];
-        }
-        vertices = tmp;
     }
 
     @Override
     public void removeVertex(T vertex) throws GraphExceptions {
-
         if (isEmpty()) {
             throw new GraphExceptions(GraphExceptions.EMPTY_GRAPH);
         }
 
-        int index = getIndex(vertex);
+        GraphNode<T> nodeToRemove = getGraph(vertex);
 
-        if (index == -1) {
+        for (GraphNode<T> tGraphNode : nodeToRemove.edgeList) {
+            if (!tGraphNode.equals(nodeToRemove)) {
+                tGraphNode.edgeList.remove(nodeToRemove);
+            }
+        }
+
+        verticesList.remove(nodeToRemove);
+        numVertices--;
+    }
+
+    /**
+     * @param targetVertex
+     * @return
+     * @throws GraphExceptions
+     */
+    private GraphNode<T> getGraph(T targetVertex) throws GraphExceptions {
+
+        boolean found = false;
+        GraphNode<T> node = null;
+        Iterator<GraphNode<T>> searchItr = verticesList.iterator();
+
+        while (!found && searchItr.hasNext()) {
+            GraphNode<T> tmp = searchItr.next();
+            if (tmp.element.equals(targetVertex)) {
+                node = tmp;
+                found = true;
+            }
+        }
+
+        if (found == false) {
             throw new GraphExceptions(GraphExceptions.ELEMENT_NOT_FOUND);
         }
 
-        for (int i = index; i < numVertices - 1; i++) {
-            for (int j = 0; j < numVertices; j++) {
-                adjMatrix[j][i] = adjMatrix[j][i + 1];
-            }
-
-        }
-
-        for (int i = index; i < numVertices - 1; i++) {
-            for (int j = 0; j < numVertices; j++) {
-                adjMatrix[i][j] = adjMatrix[i + 1][j];
-            }
-
-        }
-
-        for (int h = index; h < numVertices - 1; h++) {
-            vertices[h] = vertices[h + 1];
-        }
-
-        numVertices--;
-
-    }
-
-    private int getIndex(T vertex) {
-        int position = -1;
-        int current = 0;
-        boolean found = false;
-
-        while (!found && current < numVertices) {
-            if (vertex.equals(vertices[current])) {
-                found = true;
-                position = current;
-            }
-            current++;
-        }
-
-        return position;
+        return node;
     }
 
     @Override
-    public void addEdge(T vertex1, T vertex2) {
-        addEdge(getIndex(vertex1), getIndex(vertex2));
-    }
-
-    private void addEdge(int index1, int index2) {
-        if (indexIsValid(index1) && indexIsValid(index2)) {
-            adjMatrix[index1][index2] = true;
-            adjMatrix[index2][index1] = true;
+    public void addEdge(T vertex1, T vertex2) throws GraphExceptions {
+        if (isEmpty()) {
+            throw new GraphExceptions(GraphExceptions.EMPTY_GRAPH);
         }
-    }
 
-    public boolean indexIsValid(int index) {
-        if (index >= 0 && index < numVertices) {
-            return true;
+        GraphNode<T> node1 = this.getGraph(vertex1);
+        GraphNode<T> node2 = this.getGraph(vertex2);
+
+        if (vertex1.equals(vertex2)) {
+            node1.edgeList.addToRear(node2);
+        } else {
+            node1.edgeList.addToRear(node2);
+            node2.edgeList.addToRear(node1);
         }
-        return false;
     }
 
     @Override
-    public void removeEdge(T vertex1, T vertex2) {
-        removeEdge(getIndex(vertex1), getIndex(vertex2));
-    }
+    public void removeEdge(T vertex1, T vertex2) throws GraphExceptions {
+        if (isEmpty()) {
+            throw new GraphExceptions(GraphExceptions.EMPTY_GRAPH);
+        }
 
-    private void removeEdge(int index1, int index2) {
-        if (indexIsValid(index1) && indexIsValid(index2)) {
-            adjMatrix[index1][index2] = false;
-            adjMatrix[index2][index1] = false;
+        GraphNode<T> node1 = this.getGraph(vertex1);
+        GraphNode<T> node2 = this.getGraph(vertex2);
+
+        if (vertex1.equals(vertex2)) {
+            node1.edgeList.remove(node2);
+        } else {
+            node1.edgeList.remove(node2);
+            node2.edgeList.remove(node1);
         }
     }
 
     @Override
     public Iterator iteratorBFS(T startVertex) {
-        return iteratorBFS(getIndex(startVertex));
-    }
-
-    private Iterator iteratorBFS(int startIndex) {
-        Integer x;
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
+        LinkedQueue<GraphNode<T>> traversalQueue = new LinkedQueue<GraphNode<T>>();
         UnorderedArray<T> resultList = new UnorderedArray<>();
+        GraphNode<T> tmpNode;
+        GraphNode<T> startNode;
 
-        if (!indexIsValid(startIndex)) {
+        try {
+            startNode = this.getGraph(startVertex);
+        } catch (GraphExceptions graphExceptions) {
             return resultList.iterator();
         }
 
-        boolean[] visited = new boolean[numVertices];
-        for (int i = 0; i < numVertices; i++) {
-            visited[i] = false;
-        }
+        UnorderedListADT<GraphNode<T>> visited = new UnorderedArray<>();
 
-        traversalQueue.enqueue(new Integer(startIndex));
-        visited[startIndex] = true;
+        traversalQueue.enqueue(startNode);
+        visited.addToRear(startNode);
 
         while (!traversalQueue.isEmpty()) {
-            x = traversalQueue.dequeue();
-            resultList.addToRear(vertices[x.intValue()]);
+            tmpNode = traversalQueue.dequeue();
+            resultList.addToRear(tmpNode.element);
+
             /** Find all vertices adjacent to x that have
              not been visited and queue them up */
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalQueue.enqueue(new Integer(i));
-                    visited[i] = true;
+            Iterator<GraphNode<T>> itrEdges = tmpNode.edgeList.iterator();
+            while (itrEdges.hasNext()) {
+                GraphNode<T> nextNode = itrEdges.next();
+                if (!visited.contains(nextNode)) {
+                    traversalQueue.enqueue(nextNode);
+                    visited.addToRear(nextNode);
                 }
             }
         }
@@ -167,38 +145,38 @@ public class GraphInLIst<T> implements GraphADT<T> {
 
     @Override
     public Iterator iteratorDFS(T startVertex) throws EmptyCollectionException {
-        return iteratorDFS(getIndex(startVertex));
-    }
-
-    private Iterator iteratorDFS(int startIndex) throws EmptyCollectionException {
-        Integer x;
-        boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack();
+        LinkedStack<GraphNode<T>> traversalStack = new LinkedStack();
         UnorderedArray<T> resultList = new UnorderedArray();
-        boolean[] visited = new boolean[numVertices];
+        GraphNode<T> tmpNode;
+        GraphNode<T> startNode;
+        boolean found;
 
-        if (!indexIsValid(startIndex)) {
+        try {
+            startNode = this.getGraph(startVertex);
+        } catch (GraphExceptions graphExceptions) {
             return resultList.iterator();
         }
 
-        for (int i = 0; i < numVertices; i++) {
-            visited[i] = false;
-        }
+        UnorderedListADT<GraphNode<T>> visited = new UnorderedArray<>();
 
-        traversalStack.push(new Integer(startIndex));
-        resultList.addToRear(vertices[startIndex]);
-        visited[startIndex] = true;
+        traversalStack.push(startNode);
+        resultList.addToRear(startNode.element);
+        visited.addToRear(startNode);
 
         while (!traversalStack.isEmpty()) {
-            x = traversalStack.peek();
+            tmpNode = traversalStack.peek();
             found = false;
+
             /** Find a vertex adjacent to x that has not been visited
              and push it on the stack */
-            for (int i = 0; (i < numVertices) && !found; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalStack.push(new Integer(i));
-                    resultList.addToRear(vertices[i]);
-                    visited[i] = true;
+
+            Iterator<GraphNode<T>> itrEdges = tmpNode.edgeList.iterator();
+            while (itrEdges.hasNext() && !found) {
+                GraphNode<T> nextNode = itrEdges.next();
+                if (!visited.contains(nextNode)) {
+                    traversalStack.push(nextNode);
+                    resultList.addToRear(nextNode.element);
+                    visited.addToRear(nextNode);
                     found = true;
                 }
             }
@@ -206,63 +184,70 @@ public class GraphInLIst<T> implements GraphADT<T> {
                 traversalStack.pop();
             }
         }
-        return resultList.iterator();
 
+        return resultList.iterator();
     }
 
     @Override
-    public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
-        Integer x;
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
+    public Iterator iteratorShortestPath(T startVertex, T targetVertex) throws GraphExceptions {
+        LinkedQueue<GraphNode<T>> traversalQueue = new LinkedQueue<>();
         UnorderedArray<T> resultList = new UnorderedArray<>();
-        int startIndex = getIndex(startVertex);
-        int targetIndex = getIndex(targetVertex);
-        int[][] info = new int[vertices.length][3];
+        GraphNode<T> tmpNode;
+        GraphNode<T> startNode;
+        GraphNode<T> targetNode;
+        int[][] info = new int[numVertices][3];
         boolean found = false;
-        int counter = 0;
+        int counterArrayPosition = 0;
+        int counterVisited = 0;
 
-        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
+        try {
+            startNode = this.getGraph(startVertex);
+            targetNode = this.getGraph(targetVertex);
+        } catch (GraphExceptions graphExceptions) {
             return resultList.iterator();
         }
 
-        boolean[] visited = new boolean[numVertices];
-        for (int i = 0; i < numVertices; i++) {
-            visited[i] = false;
-        }
+        UnorderedListADT<GraphNode<T>> visited = new UnorderedArray<>();
 
-        traversalQueue.enqueue(new Integer(startIndex));
+        traversalQueue.enqueue(startNode);
         //Index of Vertex
-        info[counter][0] = startIndex;
+        info[counterArrayPosition][0] = startNode.hashCode();
         //PathLength
-        info[counter][1] = 0;
+        info[counterArrayPosition][1] = 0;
         //LastVertex
-        info[counter][2] = -1;
-        visited[startIndex] = true;
+        info[counterArrayPosition][2] = -1;
+        visited.addToRear(startNode);
 
         while (!found && !traversalQueue.isEmpty()) {
-            x = traversalQueue.dequeue();
+            tmpNode = traversalQueue.dequeue();
+
             /** Find all vertices adjacent to x that have
              not been visited and queue them up */
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalQueue.enqueue(new Integer(i));
-                    counter++;
-                    info[counter][0] = i;
-                    info[counter][1] = info[x.intValue()][1] + 1;
-                    info[counter][2] = info[x.intValue()][0];
-                    visited[i] = true;
-                    if (i == targetIndex) {
+            Iterator<GraphNode<T>> itrEdges = tmpNode.edgeList.iterator();
+            while (itrEdges.hasNext()) {
+                GraphNode<T> nextNode = itrEdges.next();
+                if (!visited.contains(nextNode)) {
+                    traversalQueue.enqueue(nextNode);
+                    counterArrayPosition++;
+                    info[counterArrayPosition][0] = nextNode.hashCode();
+                    info[counterArrayPosition][1] = info[counterVisited][1] + 1;
+                    info[counterArrayPosition][2] = counterVisited;
+                    visited.addToRear(nextNode);
+                    if (nextNode.equals(targetNode)) {
                         found = true;
+                        break;
                     }
                 }
             }
+
+            counterVisited++;
         }
 
         if (found) {
-            resultList.addToFront(vertices[info[counter][0]]);
-            int lastIndex = info[counter][2];
-            while (lastIndex != -1){
-                resultList.addToFront(vertices[info[lastIndex][0]]);
+            resultList.addToFront(getNodeFromHash(info[counterArrayPosition][0]).element);
+            int lastIndex = info[counterArrayPosition][2];
+            while (lastIndex != -1) {
+                resultList.addToFront(getNodeFromHash(info[lastIndex][0]).element);
                 lastIndex = info[lastIndex][2];
             }
 
@@ -270,9 +255,28 @@ public class GraphInLIst<T> implements GraphADT<T> {
         return resultList.iterator();
     }
 
+    /**
+     *
+     * @param hash
+     * @return
+     * @throws GraphExceptions
+     */
+    private GraphNode<T> getNodeFromHash(int hash) throws GraphExceptions {
+        Iterator<GraphNode<T>> itr = verticesList.iterator();
+
+        while (itr.hasNext()) {
+            GraphNode<T> tmpGraphNode = itr.next();
+            if (tmpGraphNode.hashCode() == hash) {
+                return tmpGraphNode;
+            }
+        }
+
+        throw new GraphExceptions(GraphExceptions.ELEMENT_NOT_FOUND);
+    }
+
     @Override
     public boolean isEmpty() {
-        return (numVertices == 0);
+        return (verticesList.isEmpty());
     }
 
     @Override
@@ -281,7 +285,7 @@ public class GraphInLIst<T> implements GraphADT<T> {
             throw new GraphExceptions(GraphExceptions.EMPTY_GRAPH);
         }
 
-        Iterator itr = iteratorBFS(0);
+        Iterator itr = iteratorBFS(verticesList.first().element);
         int counter = 0;
 
         while (itr.hasNext()) {
@@ -300,17 +304,9 @@ public class GraphInLIst<T> implements GraphADT<T> {
     @Override
     public String toString() {
         String text = "";
-        for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < numVertices; j++) {
-                text += "|";
-                if (adjMatrix[i][j] == true) {
-                    text += "T";
-                } else {
-                    text += "F";
-                }
-                text += "|";
-            }
-            text += "\n";
+        Iterator<GraphNode<T>> printItr = verticesList.iterator();
+        while (printItr.hasNext()) {
+            text += "\n" + printItr.next().toString();
         }
         return text;
     }

@@ -26,7 +26,7 @@ public interface GraphADT<T> {
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
      */
-    public void addEdge(T vertex1, T vertex2);
+    public void addEdge(T vertex1, T vertex2) throws GraphExceptions;
 
     /**
      * Removes an edge between two vertices of this graph.
@@ -34,7 +34,7 @@ public interface GraphADT<T> {
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
      */
-    public void removeEdge(T vertex1, T vertex2);
+    public void removeEdge(T vertex1, T vertex2) throws GraphExceptions;
 
     /**
      * Returns a breadth first iterator starting with the given vertex.
@@ -43,7 +43,7 @@ public interface GraphADT<T> {
      * @return a breadth first iterator beginning at
      * the given vertex
      */
-    public Iterator iteratorBFS(T startVertex);
+    public Iterator iteratorBFS(T startVertex) throws GraphExceptions;
 
     /**
      * Returns a depth first iterator starting with the given vertex.
@@ -63,7 +63,7 @@ public interface GraphADT<T> {
      * @return an iterator that contains the shortest
      * path between the two vertices
      */
-    public Iterator iteratorShortestPath(T startVertex, T targetVertex);
+    public Iterator iteratorShortestPath(T startVertex, T targetVertex) throws GraphExceptions;
 
     /**
      * Returns true if this graph is empty, false otherwise.
