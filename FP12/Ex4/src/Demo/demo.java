@@ -1,5 +1,6 @@
 package Demo;
 
+import BinaryTree.BinaryTreeExceptions;
 import Graph.GraphInMatrix;
 
 import java.util.Iterator;
@@ -11,7 +12,7 @@ import Stack.EmptyCollectionException;
 
 public class demo {
 
-    public static void tests(int test) throws GraphExceptions, EmptyCollectionException {
+    public static void tests(int test) throws GraphExceptions, EmptyCollectionException, BinaryTreeExceptions {
         NetworkADT<Integer> graph;
         Iterator<Integer> itr;
 
@@ -180,18 +181,32 @@ public class demo {
                     System.out.println(itr.next());
                 }
                 break;
+            case 10:
+                graph = new NetworkMatrix();
+                graph.addVertex(1);
+                graph.addVertex(2);
+                graph.addVertex(3);
+                graph.addVertex(4);
+                graph.addVertex(5);
+                graph.addVertex(6);
+                graph.addEdge(1, 2, 30);
+                graph.addEdge(2, 3, 40);
+                graph.addEdge(1, 4, 5);
+                graph.addEdge(4, 5, 5);
+                graph.addEdge(5, 6, 5);
+                graph.addEdge(6, 3, 5);
+
+                System.out.println(graph.shortestPathWeight(1,3));
+
+                break;
             default:
                 break;
         }
 
     }
 
-    public static void main(String[] args) throws GraphExceptions, EmptyCollectionException {
-        System.out.println("----------------------------------");
-        for (int i = 1; i <= 9; ++i) {
-            tests(i);
-            System.out.println("----------------------------------");
-        }
+    public static void main(String[] args) throws GraphExceptions, EmptyCollectionException, BinaryTreeExceptions {
+        tests(10);
     }
 }
 

@@ -1,7 +1,11 @@
 package Network;
 
+import BinaryTree.BinaryTreeExceptions;
 import Graph.GraphExceptions;
 import Graph.GraphInMatrix;
+import Lists.UnorderedArray;
+import Lists.UnorderedListADT;
+import PriorityQueue.*;
 
 /**
  * @param <T>
@@ -111,9 +115,41 @@ public class NetworkMatrix<T> extends GraphInMatrix<T> implements NetworkADT<T> 
     }
 
     @Override
-    public double shortestPathWeight(T vertex1, T vertex2) {
-        return 0;
+    public double shortestPathWeight(T vertex1, T vertex2) throws BinaryTreeExceptions, GraphExceptions {
+        PriorityQueue<Pair<T, Double>> priorityQueue = new PriorityQueue();
+        UnorderedListADT<T> verticesInPathToDest = new UnorderedArray();
+
+
+        priorityQueue.addElement(new PriorityQueueNode(new Pair<>(vertex1,0.0),0));
+
+        while(!priorityQueue.isEmpty()){
+            Pair<T, Double> pair;
+            double minCostToV;
+            double minCostToW;
+
+            pair = priorityQueue.removeNext();
+            T v = pair.getVertex();
+            minCostToV = pair.getCost();
+
+            if(v.equals(vertex2)){
+                return minCostToV;
+            }
+
+            verticesInPathToDest.addToRear(v);
+
+            for(int i = 0; i < vertices.length; i++){
+                if(adjMatrix[i][getIndex(v)] == true){
+                    if(!verticesInPathToDest.contains(vertices[i])){
+                        minCostToW = minCostToV + weightMatrix[i][getIndex(v)];
+                        priorityQueue.addElement(new PriorityQueueNode(new Pair<>(vertices[i],minCostToW), (int) minCostToW));
+                    }
+                }
+            }
+        }
+
+        throw new GraphExceptions(GraphExceptions.ELEMENT_NOT_FOUND);
     }
+
 
     @Override
     public String toString() {
