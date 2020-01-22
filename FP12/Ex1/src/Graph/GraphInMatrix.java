@@ -7,7 +7,7 @@ import Stack.LinkedStack;
 
 import java.util.Iterator;
 
-public class Graph<T> implements GraphADT<T> {
+public class GraphInMatrix<T> implements GraphADT<T> {
 
     protected final int DEFAULT_CAPACITY = 4;
     protected int numVertices; // number of vertices in the graph
@@ -17,7 +17,7 @@ public class Graph<T> implements GraphADT<T> {
     /**
      * Creates an empty graph.
      */
-    public Graph() {
+    public GraphInMatrix() {
         numVertices = 0;
         this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
@@ -42,7 +42,18 @@ public class Graph<T> implements GraphADT<T> {
         for (int i = 0; i < vertices.length; i++) {
             tmp[i] = vertices[i];
         }
+
         vertices = tmp;
+
+        boolean[][] tmp_mat = new boolean[tmp.length][tmp.length];
+        for (int j = 0; j < adjMatrix.length; j++) {
+            for (int k = 0; k < adjMatrix.length; k++) {
+                tmp_mat[j][k] = adjMatrix[j][k];
+            }
+        }
+
+        adjMatrix = tmp_mat;
+
     }
 
     @Override
@@ -80,7 +91,7 @@ public class Graph<T> implements GraphADT<T> {
 
     }
 
-    private int getIndex(T vertex) {
+    protected int getIndex(T vertex) {
         int position = -1;
         int current = 0;
         boolean found = false;
@@ -89,6 +100,7 @@ public class Graph<T> implements GraphADT<T> {
             if (vertex.equals(vertices[current])) {
                 found = true;
                 position = current;
+                break;
             }
             current++;
         }
@@ -108,7 +120,7 @@ public class Graph<T> implements GraphADT<T> {
         }
     }
 
-    public boolean indexIsValid(int index) {
+    protected boolean indexIsValid(int index) {
         if (index >= 0 && index < numVertices) {
             return true;
         }
@@ -261,7 +273,7 @@ public class Graph<T> implements GraphADT<T> {
         if (found) {
             resultList.addToFront(vertices[info[counter][0]]);
             int lastIndex = info[counter][2];
-            while (lastIndex != -1){
+            while (lastIndex != -1) {
                 resultList.addToFront(vertices[info[lastIndex][0]]);
                 lastIndex = info[lastIndex][2];
             }
