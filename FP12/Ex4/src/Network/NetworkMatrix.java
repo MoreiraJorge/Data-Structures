@@ -114,40 +114,43 @@ public class NetworkMatrix<T> extends GraphInMatrix<T> implements NetworkADT<T> 
         }
     }
 
-    @Override
-    public double shortestPathWeight(T vertex1, T vertex2) throws BinaryTreeExceptions, GraphExceptions {
-        PriorityQueue<Pair<T, Double>> priorityQueue = new PriorityQueue();
-        UnorderedListADT<T> verticesInPathToDest = new UnorderedArray();
+    private Pair<T> findLastPairInShortestPair(T startVertex, T targetVertex) throws BinaryTreeExceptions, GraphExceptions {
+        PriorityQueue<Pair<T>> priorityQueue = new PriorityQueue<Pair<T>>();
+        UnorderedListADT<T> verticesInPath = new UnorderedArray<>();
+        Pair<T> startPair = new Pair<>(null, startVertex, 0.0);
 
+        priorityQueue.addElement(startPair, (int) startPair.cost);
 
-        priorityQueue.addElement(new PriorityQueueNode(new Pair<>(vertex1,0.0),0));
+        while (!priorityQueue.isEmpty()) {
+            Pair<T> pair = priorityQueue.removeNext();
+            T vertex = pair.vertex;
+            double minCostToVertex = pair.cost;
 
-        while(!priorityQueue.isEmpty()){
-            Pair<T, Double> pair;
-            double minCostToV;
-            double minCostToW;
-
-            pair = priorityQueue.removeNext();
-            T v = pair.getVertex();
-            minCostToV = pair.getCost();
-
-            if(v.equals(vertex2)){
-                return minCostToV;
+            if (vertex.equals(targetVertex)) {
+                return pair;
             }
 
-            verticesInPathToDest.addToRear(v);
+            verticesInPath.addToRear(vertex);
 
-            for(int i = 0; i < vertices.length; i++){
-                if(adjMatrix[i][getIndex(v)] == true){
-                    if(!verticesInPathToDest.contains(vertices[i])){
-                        minCostToW = minCostToV + weightMatrix[i][getIndex(v)];
-                        priorityQueue.addElement(new PriorityQueueNode(new Pair<>(vertices[i],minCostToW), (int) minCostToW));
-                    }
+            for (int i = 0; i < numVertices; ++i) {
+                if (adjMatrix[getIndex(vertex)][i] && !verticesInPath.contains(vertices[i])) {
+                    double minCostToI = minCostToVertex + weightMatrix[getIndex(vertex)][i];
+                    Pair<T> tmpPair = new Pair<>(pair, vertices[i], minCostToI);
+                    priorityQueue.addElement(tmpPair, (int) tmpPair.cost);
                 }
             }
         }
 
-        throw new GraphExceptions(GraphExceptions.ELEMENT_NOT_FOUND);
+        throw new GraphExceptions(GraphExceptions.PATH_NOT_FOUND);
+    }
+
+    @Override
+    public double shortestPathWeight(T vertex1, T vertex2) throws BinaryTreeExceptions, GraphExceptions {
+        if (!indexIsValid(getIndex(vertex1))) {
+            throw new GraphExceptions(GraphExceptions.ELEMENT_NOT_FOUND);
+        }
+
+        return findLastPairInShortestPair(vertex1, vertex2).cost;
     }
 
 
