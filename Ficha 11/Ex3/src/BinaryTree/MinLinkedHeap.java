@@ -2,11 +2,15 @@ package BinaryTree;
 
 /**
  * Heap implements a heap.
- *
  * @author morei
  */
 public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> {
+
     private HeapNode<T> lastNode;
+
+    public MinLinkedHeap() {
+        super();
+    }
 
     @Override
     public void addElement(T obj) {
@@ -34,7 +38,8 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
     private HeapNode<T> getNextParentAdd() {
         HeapNode<T> result = lastNode;
 
-        while ((result != root) && (result.parent.getLeft() != result)) {
+        while ((result != root) &&
+                (result.parent.getLeft() != result)) {
             result = result.parent;
         }
 
