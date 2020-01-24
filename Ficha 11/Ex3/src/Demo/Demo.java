@@ -1,14 +1,14 @@
 package Demo;
 
 import BinaryTree.BinaryTreeExceptions;
-import BinaryTree.MinLinkedHeap;
+import BinaryTree.MaxLinkedHeap;
 
 import java.util.Iterator;
 
 public class Demo {
 
     public static void tests(int test) throws BinaryTreeExceptions {
-        MinLinkedHeap<Integer> tree = new MinLinkedHeap();
+        MaxLinkedHeap<Integer> tree = new MaxLinkedHeap();
         Iterator<Integer> itr;
 
         switch (test) {
@@ -32,7 +32,7 @@ public class Demo {
                 tree.addElement(3);
                 tree.addElement(2);
                 tree.addElement(1);
-                System.out.println("Excpeted 1. Result : " + tree.removeMin());
+                System.out.println("Excpeted 1. Result : " + tree.removeMax());
                 itr = tree.iteratorLevelOrder();
                 while (itr.hasNext()) {
                     System.out.println(itr.next());
@@ -41,22 +41,22 @@ public class Demo {
             case 3:
                 tree.addElement(6);
                 tree.addElement(4);
-                tree.addElement(5);
+                tree.addElement(4);
                 tree.addElement(3);
                 tree.addElement(2);
                 tree.addElement(1);
+                tree.addElement(4);
+                tree.addElement(4);
+                tree.addElement(4);
                 tree.addElement(5);
                 tree.addElement(4);
-                tree.addElement(6);
-                tree.addElement(5);
                 tree.addElement(4);
-                tree.addElement(6);
-                System.out.println("Excpeted 1. Result : " + tree.removeMin());
+                System.out.println("Excpeted 6. Result : " + tree.removeMax());
                 Iterator<Integer> it = tree.iteratorLevelOrder();
                 while (it.hasNext()) {
                     System.out.println(it.next());
                 }
-                System.out.println("Excepted : 2. Result : " + tree.findMin());
+                System.out.println("Excepted : 5. Result : " + tree.findMax());
             default:
                 break;
         }
@@ -64,6 +64,6 @@ public class Demo {
     }
 
     public static void main(String[] args) throws BinaryTreeExceptions {
-        Demo.tests(3);
+        Demo.tests(1);
     }
 }

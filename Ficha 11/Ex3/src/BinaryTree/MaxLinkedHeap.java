@@ -1,11 +1,7 @@
 package BinaryTree;
 
-/**
- * Heap implements a heap.
- *
- * @author morei
- */
-public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> {
+public class MaxLinkedHeap<T> extends LinkedBinaryTree<T> implements MaxHeapADT<T> {
+
     private HeapNode<T> lastNode;
 
     @Override
@@ -62,7 +58,7 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
 
         temp = next.getElement();
 
-        while ((next != root) && (((Comparable) temp).compareTo(next.parent.getElement()) < 0)) {
+        while ((next != root) && (((Comparable) temp).compareTo(next.parent.getElement()) > 0)) {
             next.setElement(next.parent.getElement());
             next = next.parent;
         }
@@ -70,8 +66,7 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
     }
 
     @Override
-    public T removeMin() throws BinaryTreeExceptions {
-
+    public T removeMax() throws BinaryTreeExceptions {
         if (isEmpty()) {
             throw new BinaryTreeExceptions(BinaryTreeExceptions.EMPTY_TREE);
         }
@@ -127,14 +122,14 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
             next = right;
         } else if (right == null) {
             next = left;
-        } else if (((Comparable) left.getElement()).compareTo(right.getElement()) < 0) {
+        } else if (((Comparable) left.getElement()).compareTo(right.getElement()) > 0) {
             next = left;
         } else {
             next = right;
         }
 
         temp = node.getElement();
-        while ((next != null) && (((Comparable) next.getElement()).compareTo(temp) < 0)) {
+        while ((next != null) && (((Comparable) next.getElement()).compareTo(temp) > 0)) {
             node.setElement(next.getElement());
             node = next;
             left = (HeapNode<T>) node.getLeft();
@@ -146,7 +141,7 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
                 next = right;
             } else if (right == null) {
                 next = left;
-            } else if (((Comparable) left.getElement()).compareTo(right.getElement()) < 0) {
+            } else if (((Comparable) left.getElement()).compareTo(right.getElement()) > 0) {
                 next = left;
             } else {
                 next = right;
@@ -157,7 +152,7 @@ public class MinLinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> 
     }
 
     @Override
-    public T findMin() {
+    public T findMax() {
         return root.getElement();
     }
 }
