@@ -5,18 +5,18 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedArra
     @Override
     public void addToFront(T element) {
 
-        if (isEmpty()) {
-            array[0] = element;
+        if(isEmpty()) {
+            list[0] = element;
         } else {
 
-            if (rear == array.length) {
+            if (rear == list.length) {
                 expandCapacity();
             }
 
             for (int i = rear - 1; i >= 0; i--) {
-                array[i + 1] = array[i];
+                list[i + 1] = list[i];
             }
-            array[0] = element;
+            list[0] = element;
 
         }
 
@@ -27,15 +27,15 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedArra
     @Override
     public void addToRear(T element) {
         if (isEmpty()) {
-            array[0] = element;
+            list[0] = element;
 
         } else {
 
-            if (rear == array.length) {
+            if (rear == list.length) {
                 expandCapacity();
             }
 
-            array[rear] = element;
+            list[rear] = element;
         }
 
         rear++;
@@ -43,18 +43,18 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedArra
     }
 
     @Override
-    public void addAfter(T element, T target) throws EmptyListException, ElementNotFoundException {
+    public void addAfter(T element, T target) throws ListExceptions{
         boolean found = false;
         int current = 0;
         if (!isEmpty()) {
 
-            if (rear == array.length) {
+            if (rear == list.length) {
                 expandCapacity();
             }
 
             while (current < size() && found == false) {
 
-                if (array[current].equals(target)) {
+                if (list[current].equals(target)) {
 
                     found = true;
 
@@ -66,19 +66,19 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedArra
             if (found = true) {
 
                 for (int i = rear - 1; i > current; i--) {
-                    array[i + 1] = array[i];
+                    list[i + 1] = list[i];
                 }
 
-                array[current + 1] = element;
+                list[current + 1] = element;
                 rear++;
                 modCount++;
 
             } else {
-                throw new ElementNotFoundException("Elemento nao encontrado");
+                throw new ListExceptions(ListExceptions.ELEMENT_NOT_FOUND);
             }
 
         } else {
-            throw new EmptyListException("List is Empty");
+            throw new ListExceptions(ListExceptions.EMPTY_LIST);
         }
     }
 
