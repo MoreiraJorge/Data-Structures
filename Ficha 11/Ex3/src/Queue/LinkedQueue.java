@@ -1,81 +1,74 @@
 package Queue;
 
-import Exceptions.EmptyListException;
-import Interfaces.QueueADT;
-
 public class LinkedQueue<T> implements QueueADT<T> {
 
-    private LinearNode<T> front, rear;
+
+    private LinearNode<T> front;
+    private LinearNode<T> rear;
     private int size = 0;
 
     public LinkedQueue() {
-        this.front = null;
-        this.rear = null;
+        front = null;
+        rear = null;
     }
 
     @Override
     public void enqueue(T element) {
-
-        if (isEmpty()) {
-            this.front = new LinearNode(element);
-            this.front.setNext(null);
-            this.rear = this.front;
+        if (size() == 0) {
+            front = new LinearNode<>(element, null);
+            rear = front;
         } else {
-            this.rear.setNext(new LinearNode(element));
-            this.rear = rear.getNext();
+            rear.setNext(new LinearNode<>(element, null));
+            rear = rear.getNext();
         }
 
         size++;
     }
 
     @Override
-    public T dequeue() throws EmptyListException {
-
-        if (isEmpty()) {
-            throw new EmptyListException("Lista Vazia");
-        }
+    public T dequeue() {
+        T tmp = null;
 
         if (size() == 1) {
-            T tmp = this.front.getData();
-            this.front = this.rear = null;
+            tmp = front.getData();
+            front = rear = null;
             size--;
-            return tmp;
-        } else {
-            T tmp = this.front.getData();
-            this.front = front.getNext();
+        } else if (size() != 0){
+            tmp = front.getData();
+            front = front.getNext();
             size--;
-            return tmp;
         }
 
+        return tmp;
     }
 
     @Override
-    public T first() throws EmptyListException {
-        if (isEmpty()) {
-            throw new EmptyListException("Lista Vazia");
+    public T first() {
+        if (size() == 0) {
+            return null;
         }
+        return front.getData();
 
-        return this.front.getData();
     }
 
     @Override
     public boolean isEmpty() {
-        return size() == 0;
+        return (size() == 0);
     }
 
     @Override
     public int size() {
-        return this.size;
+        return size;
     }
 
     @Override
     public String toString() {
+        LinearNode<T> current = front;
         String text = "";
-        LinearNode Node = this.front;
 
-        while (Node != null) {
-            text += "\n" + Node.toString();
-            Node = Node.getNext();
+        while (current != null) {
+            text += "\n" + current.toString();
+            current = current.getNext();
         }
 
         return text;

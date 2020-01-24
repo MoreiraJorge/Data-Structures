@@ -1,6 +1,4 @@
-package Interfaces;
-
-import Exceptions.EmptyListException;
+package Queue;
 
 public interface QueueADT<T> {
 
@@ -8,7 +6,7 @@ public interface QueueADT<T> {
      * Adds one element to the rear of this queue.
      *
      * @param element the element to be added to
-     *                the rear of this queue
+     * the rear of this queue
      */
     public void enqueue(T element);
 
@@ -18,7 +16,7 @@ public interface QueueADT<T> {
      *
      * @return the element at the front of this queue
      */
-    public T dequeue() throws EmptyListException;
+    public T dequeue();
 
     /**
      * Returns without removing the element at the front of
@@ -26,7 +24,7 @@ public interface QueueADT<T> {
      *
      * @return the first element in this queue
      */
-    public T first() throws EmptyListException;
+    public T first();
 
     /**
      * Returns true if this queue contains no elements.

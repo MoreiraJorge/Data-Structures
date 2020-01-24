@@ -1,9 +1,6 @@
-package ArrayUnorderedListPkg;
+package Lists;
 
-import Exceptions.ElementNotFoundException;
-import Exceptions.EmptyListException;
-
-public class ArrayUnorderedList<T> extends ArrayList<T> implements Interfaces.UnorderedArrayListADT<T> {
+public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedArrayListADT<T> {
 
     @Override
     public void addToFront(T element) {

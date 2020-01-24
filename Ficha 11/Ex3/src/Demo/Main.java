@@ -1,18 +1,14 @@
-package MainPkg;
+package Demo;
 
 
-import Exceptions.ElementNotFoundException;
-import Exceptions.EmptyCollectionException;
-import Exceptions.EmptyListException;
-import Tree.LinkedBinarySearchTree;
-import Tree.LinkedHeap;
+import BinaryTree.MinLinkedHeap;
 
 import java.util.Iterator;
 
 public class Main {
 
     public static void test(int test) throws EmptyListException, ElementNotFoundException, EmptyCollectionException {
-        LinkedHeap<Integer> tree = new LinkedHeap();
+        MinLinkedHeap<Integer> tree = new MinLinkedHeap();
         Iterator<Integer> itr;
 
         switch (test) {

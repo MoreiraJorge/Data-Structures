@@ -1,7 +1,4 @@
-package Interfaces;
-
-import Exceptions.ElementNotFoundException;
-import Exceptions.EmptyListException;
+package BinaryTree;
 
 import java.util.Iterator;
 
@@ -12,7 +9,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return a reference to the root
      */
-    public T getRoot() throws ElementNotFoundException;
+    public T getRoot() throws BinaryTreeExceptions;
 
     /**
      * Returns true if this binary tree is empty and false otherwise.
@@ -35,7 +32,7 @@ public interface BinaryTreeADT<T> {
      * @param targetElement the element being sought in the tree
      * @return true if the tree contains the target element
      */
-    public boolean contains(T targetElement) throws ElementNotFoundException;
+    public boolean contains(T targetElement) throws BinaryTreeExceptions;
 
     /**
      * Returns a reference to the specified element if it is found in
@@ -44,9 +41,8 @@ public interface BinaryTreeADT<T> {
      *
      * @param targetElement the element being sought in the tree
      * @return a reference to the specified element
-     *
      */
-    public T find(T targetElement) throws ElementNotFoundException;
+    public T find(T targetElement) throws BinaryTreeExceptions;
 
     /**
      * Returns the string representation of the binary tree.
@@ -62,7 +58,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorInOrder();
+    public Iterator<T> iteratorInOrder() throws BinaryTreeExceptions;
 
     /**
      * Performs a preorder traversal on this binary tree by calling an
@@ -71,7 +67,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorPreOrder();
+    public Iterator<T> iteratorPreOrder() throws BinaryTreeExceptions;
 
     /**
      * Performs a postorder traversal on this binary tree by
@@ -80,7 +76,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorPostOrder();
+    public Iterator<T> iteratorPostOrder() throws BinaryTreeExceptions;
 
     /**
      * Performs a levelorder traversal on the binary tree,
@@ -88,5 +84,5 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorLevelOrder() throws EmptyListException, ElementNotFoundException;
+    public Iterator<T> iteratorLevelOrder() throws BinaryTreeExceptions;
 }
